@@ -56,15 +56,10 @@
         <artifactId>loom-proto</artifactId>
         <version>${loom.version}</version>
       </dependency>
-      <dependency>
-        <groupId>io.metaloom.loom</groupId>
-        <artifactId>loom-test</artifactId>
-        <version>${loom.version}</version>
-        <scope>test</scope>
-      </dependency>
     </dependencies>
 
   </dependencyManagement>
+
 
   <licenses>
     <license>
@@ -82,13 +77,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.metaloom.loom</groupId>
-      <artifactId>loom-test</artifactId>
+      <groupId>io.metaloom.loom.test</groupId>
+      <artifactId>loom-test-env</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

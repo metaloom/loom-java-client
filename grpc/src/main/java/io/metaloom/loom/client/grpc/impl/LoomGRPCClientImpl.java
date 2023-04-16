@@ -41,7 +41,7 @@ public class LoomGRPCClientImpl extends AbstractLoomGRPCClient {
 	public LoomGRPCClientImpl init() {
 		channel = Grpc.newChannelBuilderForAddress(hostname, port, InsecureChannelCredentials.create())
 			.userAgent(userAgent())
-			.usePlaintext()
+			//.usePlaintext()
 			.build();
 		// ManagedChannelBuilder.forAddress(hostname, port)
 		// .userAgent(LoomGRPCClient.USER_AGENT)
