@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import io.metaloom.loom.client.http.impl.HttpErrorException;
 import io.metaloom.loom.client.http.impl.LoomClientRequestImpl;
+import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestRequestModel;
 import io.metaloom.loom.rest.model.RestResponseModel;
 import io.reactivex.rxjava3.core.Single;
@@ -17,6 +18,21 @@ public interface LoomClientRequest<T extends RestResponseModel> {
 	public static final String DELETE = "DELETE";
 	public static final String POST = "POST";
 
+	/**
+	 * Create request without payload.
+	 * 
+	 * @param <T>
+	 * @param method
+	 * @param path
+	 * @param loomClient
+	 * @param okClient
+	 * @return
+	 */
+	public static LoomClientRequest<NoResponse> create(String method, String path, LoomHttpClient loomClient,
+		OkHttpClient okClient) {
+		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, null, NoResponse.class);
+	}
+	
 	/**
 	 * Create request without payload.
 	 * 

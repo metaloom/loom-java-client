@@ -1,15 +1,14 @@
 package io.metaloom.loom.client.http;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import io.metaloom.loom.client.http.impl.HttpErrorException;
-import io.metaloom.loom.client.http.model.AbstractResponse;
 import io.metaloom.loom.client.http.model.ErrorResponse;
 import io.metaloom.loom.rest.model.RestResponseModel;
+import io.metaloom.loom.rest.model.common.AbstractResponse;
 
 public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 
@@ -47,7 +46,8 @@ public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 	}
 
 	protected void assertSuccess(AbstractResponse response) {
-		assertEquals("The response should be successful.", "ok", response.getStatus());
+		//assertEquals("ok", response.getStatus(), "The response should be successful.");
+		fail("Not impl");
 	}
 
 	protected <T extends RestResponseModel> T invoke(LoomClientRequest<T> request) throws HttpErrorException {
@@ -57,7 +57,7 @@ public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 			return response;
 		} catch (HttpErrorException e) {
 			ErrorResponse error = e.getError();
-			fail("Request failed with error " + error.getStatus().getError());
+			fail("Request failed with error " + error.getStatus());
 			return null;
 		}
 	}

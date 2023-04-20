@@ -8,6 +8,7 @@ import static io.metaloom.loom.client.http.LoomClientRequest.PUT;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +16,14 @@ import org.slf4j.LoggerFactory;
 import io.metaloom.loom.client.http.AbstractLoomClient;
 import io.metaloom.loom.client.http.LoomClientRequest;
 import io.metaloom.loom.client.http.LoomHttpClient;
+import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestRequestModel;
 import io.metaloom.loom.rest.model.RestResponseModel;
+import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
+import io.metaloom.loom.rest.model.asset.AssetListResponse;
+import io.metaloom.loom.rest.model.asset.AssetResponse;
+import io.metaloom.loom.rest.model.auth.AuthLoginRequest;
+import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
 import io.metaloom.loom.rest.model.user.UserResponse;
 import okhttp3.OkHttpClient;
 
@@ -209,18 +216,49 @@ public class LoomHttpClientImpl extends AbstractLoomClient {
 	// REST Methods
 
 	@Override
+	public LoomClientRequest<AuthLoginResponse> login(String username, String password) {
+		AuthLoginRequest request = new AuthLoginRequest();
+		request.setUsername(username);
+		request.setPassword(password);
+		return postRequest("/login", request, AuthLoginResponse.class);
+	}
+
+	@Override
 	public LoomClientRequest<UserResponse> getUserResponse() {
 		return getRequest("users", UserResponse.class);
 	}
 
+	@Override
+	public LoomClientRequest<NoResponse> deleteAsset(UUID uuid) {
+		return deleteRequest("assets/" + uuid.toString());
+	}
+
+	@Override
+	public LoomClientRequest<AssetResponse> storeAsset(AssetCreateRequest request) {
+		return postRequest("assets", request, AssetResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<AssetResponse> loadAsset(UUID uuid) {
+		return getRequest("assets/" + uuid.toString(), AssetResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<AssetListResponse> listAssets() {
+		return getRequest("assets", AssetListResponse.class);
+	}
+
 	// @Override
-	// public LoomClientRequest<LoomBinaryResponse> downloadCollectionSnapshot(String collectionName, String snapshotName) {
-	// assertCollectionName(collectionName);
-	// return getRequest("collections/" + collectionName + "/snapshots/" + snapshotName, LoomBinaryResponse.class);
+	// public LoomClientRequest<LoomBinaryResponse> download(String collectionName, String snapshotName) {
+	// return getRequest("download/" + collectionName + "/snapshots/" + snapshotName, LoomBinaryResponse.class);
 	// }
 
 	private <T extends RestResponseModel> LoomClientRequest<T> deleteRequest(String path, Class<T> responseClass) {
 		return LoomClientRequest.create(DELETE, path, this, okClient, responseClass);
+	}
+
+	private LoomClientRequest<NoResponse> deleteRequest(String path) {
+		return LoomClientRequest.create(DELETE, path, this, okClient);
 	}
 
 	private <T extends RestResponseModel> LoomClientRequest<T> getRequest(String path, Class<T> responseClass) {
@@ -242,5 +280,4 @@ public class LoomHttpClientImpl extends AbstractLoomClient {
 	private <T extends RestResponseModel> LoomClientRequest<T> patchRequest(String path, RestRequestModel request, Class<T> responseClass) {
 		return LoomClientRequest.create(PATCH, path, this, okClient, request, responseClass);
 	}
-
 }

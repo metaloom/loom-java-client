@@ -4,7 +4,10 @@ package io.metaloom.loom.client.http;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.metaloom.loom.test.container.LoomContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+
+@Testcontainers
 public abstract class AbstractContainerTest {
 
 	@RegisterExtension
