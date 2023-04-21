@@ -31,7 +31,7 @@ public class CustomOkHttpClientTest extends AbstractContainerTest {
 			.build()) {
 
 			// Create a collection
-			UserResponse userResponse = client.getUserResponse().sync();
+			UserResponse userResponse = client.loadUser("admin").sync();
 			assertNotNull(userResponse);
 		}
 	}

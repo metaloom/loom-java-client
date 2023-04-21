@@ -24,6 +24,8 @@ import io.metaloom.loom.rest.model.asset.AssetListResponse;
 import io.metaloom.loom.rest.model.asset.AssetResponse;
 import io.metaloom.loom.rest.model.auth.AuthLoginRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
+import io.metaloom.loom.rest.model.user.UserCreateRequest;
+import io.metaloom.loom.rest.model.user.UserListResponse;
 import io.metaloom.loom.rest.model.user.UserResponse;
 import okhttp3.OkHttpClient;
 
@@ -224,9 +226,26 @@ public class LoomHttpClientImpl extends AbstractLoomClient {
 	}
 
 	@Override
-	public LoomClientRequest<UserResponse> getUserResponse() {
-		return getRequest("users", UserResponse.class);
+	public LoomClientRequest<UserResponse> loadUser(String username) {
+		return getRequest("users/" + username, UserResponse.class);
 	}
+
+	@Override
+	public LoomClientRequest<UserResponse> createUser(UserCreateRequest request) {
+		return postRequest("users", request, UserResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<UserListResponse> listUsers() {
+		return getRequest("users", UserListResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteUser(UUID uuid) {
+		return deleteRequest("/users/" + uuid.toString());
+	}
+
+	// ASSET
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteAsset(UUID uuid) {
