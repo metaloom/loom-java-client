@@ -6,9 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import io.metaloom.loom.client.http.impl.HttpErrorException;
-import io.metaloom.loom.client.http.model.ErrorResponse;
 import io.metaloom.loom.rest.model.RestResponseModel;
 import io.metaloom.loom.rest.model.common.AbstractResponse;
+import io.metaloom.loom.rest.model.error.ErrorResponse;
 
 public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 

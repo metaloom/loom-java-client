@@ -2,8 +2,8 @@ package io.metaloom.loom.client.http.impl;
 
 import java.util.function.Function;
 
-import io.metaloom.loom.client.http.model.ErrorResponse;
 import io.metaloom.loom.rest.json.Json;
+import io.metaloom.loom.rest.model.error.ErrorResponse;
 
 /**
  * Exception which is also used to return non-200 error responses.
