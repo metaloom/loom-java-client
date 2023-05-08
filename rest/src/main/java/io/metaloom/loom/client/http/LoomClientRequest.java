@@ -1,5 +1,7 @@
 package io.metaloom.loom.client.http;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import io.metaloom.loom.client.http.impl.HttpErrorException;
@@ -10,7 +12,7 @@ import io.metaloom.loom.rest.model.RestResponseModel;
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
-public interface LoomClientRequest<T extends RestResponseModel> {
+public interface LoomClientRequest<T extends RestResponseModel<T>> {
 
 	public static final String PUT = "PUT";
 	public static final String PATCH = "PATCH";
@@ -32,7 +34,7 @@ public interface LoomClientRequest<T extends RestResponseModel> {
 		OkHttpClient okClient) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, null, NoResponse.class);
 	}
-	
+
 	/**
 	 * Create request without payload.
 	 * 
@@ -44,7 +46,7 @@ public interface LoomClientRequest<T extends RestResponseModel> {
 	 * @param responseClass
 	 * @return
 	 */
-	public static <T extends RestResponseModel> LoomClientRequest<T> create(String method, String path, LoomHttpClient loomClient,
+	public static <T extends RestResponseModel<T>> LoomClientRequest<T> create(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient, Class<T> responseClass) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, null, responseClass);
 	}
@@ -61,7 +63,7 @@ public interface LoomClientRequest<T extends RestResponseModel> {
 	 * @param responseClass
 	 * @return
 	 */
-	public static <T extends RestResponseModel> LoomClientRequest<T> create(String method, String path, LoomHttpClient loomClient,
+	public static <T extends RestResponseModel<T>> LoomClientRequest<T> create(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient, RestRequestModel request, Class<T> responseClass) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, request, responseClass);
 	}
@@ -74,30 +76,6 @@ public interface LoomClientRequest<T extends RestResponseModel> {
 	 * @return Fluent API
 	 */
 	LoomClientRequest<T> addQueryParameter(String key, String value);
-
-	/**
-	 * Add the wait query parameter.
-	 * 
-	 * @param wait
-	 * @return
-	 */
-	LoomClientRequest<T> addWait(boolean wait);
-
-	/**
-	 * Add the timeout query parameter to the request.
-	 * 
-	 * @param timeout
-	 * @return
-	 */
-	LoomClientRequest<T> addTimeout(int timeout);
-
-	/**
-	 * Add the force query parameter to the request.
-	 * 
-	 * @param force
-	 * @return
-	 */
-	LoomClientRequest<T> addForce(boolean force);
 
 	/**
 	 * Returns a single which can be used to execute the request and listen to the result.
@@ -121,5 +99,9 @@ public interface LoomClientRequest<T extends RestResponseModel> {
 	 * @throws HttpErrorException
 	 */
 	T sync() throws HttpErrorException;
+
+	LoomClientRequest<T> addLimit(int pageSize);
+
+	LoomClientRequest<T> addFrom(UUID startUuid);
 
 }

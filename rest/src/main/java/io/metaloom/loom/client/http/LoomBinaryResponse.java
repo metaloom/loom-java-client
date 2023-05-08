@@ -6,7 +6,7 @@ import java.util.Arrays;
 import io.metaloom.loom.rest.model.RestResponseModel;
 import io.reactivex.rxjava3.core.Flowable;
 
-public interface LoomBinaryResponse extends RestResponseModel, AutoCloseable {
+public interface LoomBinaryResponse extends RestResponseModel<LoomBinaryResponse>, AutoCloseable {
 
 	int FLOWABLE_BUFFER_SIZE = 8192;
 

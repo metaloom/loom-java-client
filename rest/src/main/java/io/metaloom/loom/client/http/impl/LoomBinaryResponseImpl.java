@@ -56,4 +56,9 @@ public class LoomBinaryResponseImpl implements LoomBinaryResponse {
 	public int code() {
 		return response.code();
 	}
+
+	@Override
+	public LoomBinaryResponse self() {
+		return this;
+	}
 }

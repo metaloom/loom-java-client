@@ -1,11 +1,5 @@
 package io.metaloom.loom.client.http.impl;
 
-import static io.metaloom.loom.client.http.LoomClientRequest.DELETE;
-import static io.metaloom.loom.client.http.LoomClientRequest.GET;
-import static io.metaloom.loom.client.http.LoomClientRequest.PATCH;
-import static io.metaloom.loom.client.http.LoomClientRequest.POST;
-import static io.metaloom.loom.client.http.LoomClientRequest.PUT;
-
 import java.time.Duration;
 import java.util.Objects;
 import java.util.UUID;
@@ -13,34 +7,83 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.metaloom.loom.client.http.AbstractLoomClient;
+import io.metaloom.loom.client.http.AbstractLoomOkHttpClient;
 import io.metaloom.loom.client.http.LoomClientRequest;
 import io.metaloom.loom.client.http.LoomHttpClient;
 import io.metaloom.loom.rest.model.NoResponse;
-import io.metaloom.loom.rest.model.RestRequestModel;
-import io.metaloom.loom.rest.model.RestResponseModel;
+import io.metaloom.loom.rest.model.annotation.AnnotationCreateRequest;
+import io.metaloom.loom.rest.model.annotation.AnnotationResponse;
+import io.metaloom.loom.rest.model.annotation.AnnotationUpdateRequest;
 import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
 import io.metaloom.loom.rest.model.asset.AssetListResponse;
 import io.metaloom.loom.rest.model.asset.AssetResponse;
+import io.metaloom.loom.rest.model.asset.AssetUpdateRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
+import io.metaloom.loom.rest.model.binary.BinaryCreateRequest;
+import io.metaloom.loom.rest.model.binary.BinaryListResponse;
+import io.metaloom.loom.rest.model.binary.BinaryResponse;
+import io.metaloom.loom.rest.model.binary.BinaryUpdateRequest;
+import io.metaloom.loom.rest.model.cluster.ClusterCreateRequest;
+import io.metaloom.loom.rest.model.cluster.ClusterListResponse;
+import io.metaloom.loom.rest.model.cluster.ClusterResponse;
+import io.metaloom.loom.rest.model.cluster.ClusterUpdateRequest;
+import io.metaloom.loom.rest.model.collection.CollectionCreateRequest;
+import io.metaloom.loom.rest.model.collection.CollectionListResponse;
+import io.metaloom.loom.rest.model.collection.CollectionResponse;
+import io.metaloom.loom.rest.model.collection.CollectionUpdateRequest;
+import io.metaloom.loom.rest.model.comment.CommentCreateRequest;
+import io.metaloom.loom.rest.model.comment.CommentListResponse;
+import io.metaloom.loom.rest.model.comment.CommentResponse;
+import io.metaloom.loom.rest.model.comment.CommentUpdateRequest;
+import io.metaloom.loom.rest.model.embedding.EmbeddingCreateRequest;
+import io.metaloom.loom.rest.model.embedding.EmbeddingListResponse;
+import io.metaloom.loom.rest.model.embedding.EmbeddingResponse;
+import io.metaloom.loom.rest.model.embedding.EmbeddingUpdateRequest;
+import io.metaloom.loom.rest.model.group.GroupCreateRequest;
+import io.metaloom.loom.rest.model.group.GroupListResponse;
+import io.metaloom.loom.rest.model.group.GroupResponse;
+import io.metaloom.loom.rest.model.group.GroupUpdateRequest;
+import io.metaloom.loom.rest.model.library.LibraryCreateRequest;
+import io.metaloom.loom.rest.model.library.LibraryListResponse;
+import io.metaloom.loom.rest.model.library.LibraryResponse;
+import io.metaloom.loom.rest.model.library.LibraryUpdateRequest;
+import io.metaloom.loom.rest.model.project.ProjectCreateRequest;
+import io.metaloom.loom.rest.model.project.ProjectListResponse;
+import io.metaloom.loom.rest.model.project.ProjectResponse;
+import io.metaloom.loom.rest.model.project.ProjectUpdateRequest;
+import io.metaloom.loom.rest.model.reaction.ReactionCreateRequest;
+import io.metaloom.loom.rest.model.reaction.ReactionListResponse;
+import io.metaloom.loom.rest.model.reaction.ReactionResponse;
+import io.metaloom.loom.rest.model.reaction.ReactionUpdateRequest;
+import io.metaloom.loom.rest.model.role.RoleCreateRequest;
+import io.metaloom.loom.rest.model.role.RoleListResponse;
+import io.metaloom.loom.rest.model.role.RoleResponse;
+import io.metaloom.loom.rest.model.role.RoleUpdateRequest;
+import io.metaloom.loom.rest.model.task.TaskCreateRequest;
+import io.metaloom.loom.rest.model.task.TaskListResponse;
+import io.metaloom.loom.rest.model.task.TaskResponse;
+import io.metaloom.loom.rest.model.task.TaskUpdateRequest;
+import io.metaloom.loom.rest.model.token.TokenCreateRequest;
+import io.metaloom.loom.rest.model.token.TokenListResponse;
+import io.metaloom.loom.rest.model.token.TokenResponse;
+import io.metaloom.loom.rest.model.token.TokenUpdateRequest;
 import io.metaloom.loom.rest.model.user.UserCreateRequest;
 import io.metaloom.loom.rest.model.user.UserListResponse;
 import io.metaloom.loom.rest.model.user.UserResponse;
+import io.metaloom.loom.rest.model.user.UserUpdateRequest;
 import okhttp3.OkHttpClient;
 
 /**
  * Implementation for the {@link LoomHttpClient}
  */
-public class LoomHttpClientImpl extends AbstractLoomClient {
+public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 
 	public static final Logger log = LoggerFactory.getLogger(LoomHttpClientImpl.class);
 
 	public static Builder builder() {
 		return new Builder();
 	}
-
-	private OkHttpClient okClient;
 
 	/**
 	 * Create a new client with a default timeout of 10s for all timeouts (connect, read and write).
@@ -53,31 +96,9 @@ public class LoomHttpClientImpl extends AbstractLoomClient {
 	 * @param readTimeout
 	 * @param writeTimeout
 	 */
-	protected LoomHttpClientImpl(OkHttpClient okClient, String scheme, String hostname, int port, Duration connectTimeout, Duration readTimeout,
+	public LoomHttpClientImpl(OkHttpClient okClient, String scheme, String hostname, int port, Duration connectTimeout, Duration readTimeout,
 		Duration writeTimeout) {
-		super(scheme, hostname, port, connectTimeout, readTimeout, writeTimeout);
-		this.okClient = okClient;
-	}
-
-	/**
-	 * @deprecated No longer needed. OkHttpClient will be initialized in the builder
-	 */
-	@Deprecated
-	public void init() {
-	}
-
-	/**
-	 * Return the used OK HTTP client.
-	 * 
-	 * @return
-	 */
-	public OkHttpClient getOkHttpClient() {
-		return okClient;
-	}
-
-	@Override
-	public void close() {
-		// Not needed for OkClient
+		super(okClient, scheme, hostname, port, connectTimeout, readTimeout, writeTimeout);
 	}
 
 	public static class Builder {
@@ -234,15 +255,50 @@ public class LoomHttpClientImpl extends AbstractLoomClient {
 	public LoomClientRequest<UserResponse> createUser(UserCreateRequest request) {
 		return postRequest("users", request, UserResponse.class);
 	}
+	
+	@Override
+	public LoomClientRequest<UserResponse> updateUser(UUID userUuid, UserUpdateRequest request) {
+		return postRequest("users/" + userUuid, request, UserResponse.class);
+	}
 
 	@Override
-	public LoomClientRequest<UserListResponse> listUsers() {
+	public LoomClientRequest<UserListResponse> listUsers(UUID startUuid, int perPage) {
 		return getRequest("users", UserListResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteUser(UUID uuid) {
-		return deleteRequest("/users/" + uuid.toString());
+		return deleteRequest("/users/" + uuid);
+	}
+
+	// BINARY
+
+	@Override
+	public LoomClientRequest<BinaryResponse> loadBinary(UUID uuid) {
+		return getRequest("binary/" + uuid, BinaryResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<BinaryResponse> createBinary(BinaryCreateRequest request) {
+		return postRequest("binaries", request, BinaryResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<BinaryResponse> updateBinary(BinaryUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteBinary(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<BinaryListResponse> listBinary(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// ASSET
@@ -258,45 +314,401 @@ public class LoomHttpClientImpl extends AbstractLoomClient {
 	}
 
 	@Override
+	public LoomClientRequest<AssetResponse> updateAsset(UUID uuid, AssetUpdateRequest request) {
+		return postRequest("assets/" + uuid.toString(), request, AssetResponse.class);
+	}
+
+	@Override
 	public LoomClientRequest<AssetResponse> loadAsset(UUID uuid) {
 		return getRequest("assets/" + uuid.toString(), AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetListResponse> listAssets() {
-		return getRequest("assets", AssetListResponse.class);
+	public LoomClientRequest<AssetListResponse> listAssets(UUID startUuid, int pageSize) {
+		LoomClientRequest<AssetListResponse> request = getRequest("assets", AssetListResponse.class);
+		request.addLimit(pageSize);
+		if (startUuid != null) {
+			request.addFrom(startUuid);
+		}
+		return request;
 	}
 
-	// @Override
-	// public LoomClientRequest<LoomBinaryResponse> download(String collectionName, String snapshotName) {
-	// return getRequest("download/" + collectionName + "/snapshots/" + snapshotName, LoomBinaryResponse.class);
-	// }
+	// CLUSTER
 
-	private <T extends RestResponseModel> LoomClientRequest<T> deleteRequest(String path, Class<T> responseClass) {
-		return LoomClientRequest.create(DELETE, path, this, okClient, responseClass);
+	@Override
+	public LoomClientRequest<ClusterResponse> loadCluster(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private LoomClientRequest<NoResponse> deleteRequest(String path) {
-		return LoomClientRequest.create(DELETE, path, this, okClient);
+	@Override
+	public LoomClientRequest<NoResponse> deleteCluster(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private <T extends RestResponseModel> LoomClientRequest<T> getRequest(String path, Class<T> responseClass) {
-		return LoomClientRequest.create(GET, path, this, okClient, responseClass);
+	@Override
+	public LoomClientRequest<ClusterResponse> updateCluster(ClusterUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private <T extends RestResponseModel> LoomClientRequest<T> postRequest(String path, RestRequestModel request, Class<T> responseClass) {
-		return LoomClientRequest.create(POST, path, this, okClient, request, responseClass);
+	@Override
+	public LoomClientRequest<ClusterResponse> createCluster(ClusterCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private <T extends RestResponseModel> LoomClientRequest<T> postRequest(String path, Class<T> responseClass) {
-		return LoomClientRequest.create(POST, path, this, okClient, responseClass);
+	@Override
+	public LoomClientRequest<ClusterListResponse> listClusters(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private <T extends RestResponseModel> LoomClientRequest<T> putRequest(String path, RestRequestModel request, Class<T> responseClass) {
-		return LoomClientRequest.create(PUT, path, this, okClient, request, responseClass);
+	// PROJECT
+
+	@Override
+	public LoomClientRequest<ProjectResponse> loadProject(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private <T extends RestResponseModel> LoomClientRequest<T> patchRequest(String path, RestRequestModel request, Class<T> responseClass) {
-		return LoomClientRequest.create(PATCH, path, this, okClient, request, responseClass);
+	@Override
+	public LoomClientRequest<NoResponse> deleteProject(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public LoomClientRequest<ProjectResponse> createProject(ProjectCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<ProjectResponse> updateProject(ProjectUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<ProjectListResponse> listProject(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// LIBRARY
+
+	@Override
+	public LoomClientRequest<LibraryResponse> loadLibrary(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteLibrary(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<LibraryListResponse> listLibrary(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<LibraryResponse> updateLibrary(LibraryUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<LibraryResponse> createLibrary(LibraryCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// ANNOTATION
+
+	@Override
+	public LoomClientRequest<AnnotationResponse> loadAnnotation(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteAnnotation(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<AnnotationResponse> updateAnnotation(AnnotationUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<AnnotationResponse> createAnnotation(AnnotationCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// COLLECTION
+
+	@Override
+	public LoomClientRequest<CollectionResponse> loadCollection(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<CollectionResponse> createCollection(CollectionCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<CollectionResponse> updateCollection(CollectionUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<CollectionListResponse> listCollections(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteCollection(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// REACTION
+
+	@Override
+	public LoomClientRequest<ReactionResponse> loadReaction(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteReaction(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<ReactionResponse> updateReaction(ReactionUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<ReactionResponse> createReaction(ReactionCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<ReactionListResponse> listReaction(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// EMBEDDING
+
+	@Override
+	public LoomClientRequest<EmbeddingResponse> loadEmbedding(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteEmbedding(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<EmbeddingListResponse> listEmbeddings(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<EmbeddingResponse> updateEmbedding(EmbeddingUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<EmbeddingResponse> createEmbedding(EmbeddingCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// GROUP
+
+	@Override
+	public LoomClientRequest<GroupResponse> loadGroup(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<GroupListResponse> listGroups(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteGroup(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<GroupResponse> updateGroup(GroupUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<GroupResponse> createGroup(GroupCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// COMMENT
+
+	@Override
+	public LoomClientRequest<CommentListResponse> listCommentsForAnnotation(UUID annotationUuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<CommentResponse> loadComment(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteComment(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<CommentResponse> updateComment(CommentUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<CommentResponse> createComment(CommentCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// ROLE
+
+	@Override
+	public LoomClientRequest<RoleResponse> loadRole(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteRole(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<RoleResponse> updateRole(RoleUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<RoleResponse> createRole(RoleCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<RoleListResponse> listRoles(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// TASK
+
+	@Override
+	public LoomClientRequest<TaskResponse> loadTask(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteTask(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<TaskListResponse> listTasks(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<TaskResponse> updateTask(TaskUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<TaskResponse> createTask(TaskCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// TOKEN
+
+	@Override
+	public LoomClientRequest<TokenResponse> loadToken(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<TokenListResponse> listTokens(UUID startUuid, int perPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<TokenResponse> updateToken(TokenUpdateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<TokenResponse> createToken(TokenCreateRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteToken(UUID uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

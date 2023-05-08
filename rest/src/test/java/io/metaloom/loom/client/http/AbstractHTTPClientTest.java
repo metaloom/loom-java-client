@@ -40,17 +40,17 @@ public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 		return "{ \"" + key + "\": \"" + name + "\"}";
 	}
 
-	protected void assertSuccess(RestResponseModel response) {
+	protected void assertSuccess(RestResponseModel<?> response) {
 		//assertTrue("The response should be successful.", response.getResult());
 		fail("Not impl");
 	}
 
-	protected void assertSuccess(AbstractResponse response) {
+	protected void assertSuccess(AbstractResponse<?> response) {
 		//assertEquals("ok", response.getStatus(), "The response should be successful.");
 		fail("Not impl");
 	}
 
-	protected <T extends RestResponseModel> T invoke(LoomClientRequest<T> request) throws HttpErrorException {
+	protected <T extends RestResponseModel<T>> T invoke(LoomClientRequest<T> request) throws HttpErrorException {
 		try {
 			T response = request.sync();
 			assertSuccess((AbstractResponse) response);
