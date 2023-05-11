@@ -18,12 +18,9 @@ import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
 import io.metaloom.loom.rest.model.asset.AssetListResponse;
 import io.metaloom.loom.rest.model.asset.AssetResponse;
 import io.metaloom.loom.rest.model.asset.AssetUpdateRequest;
+import io.metaloom.loom.rest.model.asset.location.LocationCreateRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
-import io.metaloom.loom.rest.model.binary.BinaryCreateRequest;
-import io.metaloom.loom.rest.model.binary.BinaryListResponse;
-import io.metaloom.loom.rest.model.binary.BinaryResponse;
-import io.metaloom.loom.rest.model.binary.BinaryUpdateRequest;
 import io.metaloom.loom.rest.model.cluster.ClusterCreateRequest;
 import io.metaloom.loom.rest.model.cluster.ClusterListResponse;
 import io.metaloom.loom.rest.model.cluster.ClusterResponse;
@@ -274,17 +271,17 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	// BINARY
 
 	@Override
-	public LoomClientRequest<BinaryResponse> loadBinary(UUID uuid) {
-		return getRequest("binary/" + uuid, BinaryResponse.class);
+	public LoomClientRequest<AssetResponse> loadBinary(UUID uuid) {
+		return getRequest("binary/" + uuid, AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<BinaryResponse> createBinary(BinaryCreateRequest request) {
-		return postRequest("binaries", request, BinaryResponse.class);
+	public LoomClientRequest<AssetResponse> createBinary(LocationCreateRequest request) {
+		return postRequest("binaries", request, AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<BinaryResponse> updateBinary(BinaryUpdateRequest request) {
+	public LoomClientRequest<AssetResponse> updateBinary(AssetUpdateRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -296,7 +293,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<BinaryListResponse> listBinary(UUID startUuid, int perPage) {
+	public LoomClientRequest<AssetListResponse> listBinary(UUID startUuid, int perPage) {
 		// TODO Auto-generated method stub
 		return null;
 	}

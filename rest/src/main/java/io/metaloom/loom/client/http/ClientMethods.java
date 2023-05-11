@@ -3,7 +3,7 @@ package io.metaloom.loom.client.http;
 import io.metaloom.loom.client.http.method.AnnotationMethods;
 import io.metaloom.loom.client.http.method.AssetMethods;
 import io.metaloom.loom.client.http.method.AuthenticationMethods;
-import io.metaloom.loom.client.http.method.BinaryMethods;
+import io.metaloom.loom.client.http.method.AssetLocationMethods;
 import io.metaloom.loom.client.http.method.ClusterMethods;
 import io.metaloom.loom.client.http.method.CollectionMethods;
 import io.metaloom.loom.client.http.method.CommentMethods;
@@ -18,13 +18,21 @@ import io.metaloom.loom.client.http.method.TokenMethods;
 import io.metaloom.loom.client.http.method.UserMethods;
 
 public interface ClientMethods extends
-	UserMethods, ClusterMethods,
-	GroupMethods, RoleMethods,
-	AssetMethods, BinaryMethods,
-	CollectionMethods, AnnotationMethods,
-	TaskMethods, AuthenticationMethods,
-	ReactionMethods, TokenMethods,
-	LibraryMethods, ProjectMethods,
-	CommentMethods, EmbeddingMethods {
+	UserMethods,
+	ClusterMethods,
+	GroupMethods,
+	RoleMethods,
+	AssetMethods,
+	AssetLocationMethods,
+	CollectionMethods,
+	AnnotationMethods,
+	TaskMethods, 
+	AuthenticationMethods,
+	ReactionMethods,
+	TokenMethods,
+	LibraryMethods, 
+	ProjectMethods,
+	CommentMethods,
+	EmbeddingMethods {
 
 }
