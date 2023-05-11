@@ -11,13 +11,13 @@ import io.metaloom.loom.rest.model.asset.AssetUpdateRequest;
 
 public interface AssetMethods {
 
+	LoomClientRequest<AssetResponse> loadAsset(UUID uuid);
+
 	LoomClientRequest<NoResponse> deleteAsset(UUID uuid);
 
 	LoomClientRequest<AssetResponse> storeAsset(AssetCreateRequest request);
 
 	LoomClientRequest<AssetResponse> updateAsset(UUID uuid, AssetUpdateRequest request);
-
-	LoomClientRequest<AssetResponse> loadAsset(UUID uuid);
 
 	LoomClientRequest<AssetListResponse> listAssets(UUID startUuid, int pageSize);
 }

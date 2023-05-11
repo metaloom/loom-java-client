@@ -13,11 +13,12 @@ public interface AssetLocationMethods {
 
 	LoomClientRequest<LocationResponse> loadLocation(UUID uuid);
 
-	LoomClientRequest<LocationResponse> createLocation(LocationCreateRequest request);
+	LoomClientRequest<NoResponse> deleteLocation(UUID uuid);
 
-	LoomClientRequest<LocationResponse> updateLocation(LocationUpdateRequest request);
+	LoomClientRequest<LocationResponse> storeLocation(LocationCreateRequest request);
+
+	LoomClientRequest<LocationResponse> updateLocation(UUID uuid, LocationUpdateRequest request);
 
 	LoomClientRequest<LocationListResponse> listLocations(UUID startUuid, int perPage);
 
-	LoomClientRequest<NoResponse> deleteBinary(UUID uuid);
 }

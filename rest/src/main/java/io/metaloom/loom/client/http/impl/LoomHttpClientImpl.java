@@ -19,6 +19,9 @@ import io.metaloom.loom.rest.model.asset.AssetListResponse;
 import io.metaloom.loom.rest.model.asset.AssetResponse;
 import io.metaloom.loom.rest.model.asset.AssetUpdateRequest;
 import io.metaloom.loom.rest.model.asset.location.LocationCreateRequest;
+import io.metaloom.loom.rest.model.asset.location.LocationListResponse;
+import io.metaloom.loom.rest.model.asset.location.LocationResponse;
+import io.metaloom.loom.rest.model.asset.location.LocationUpdateRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
 import io.metaloom.loom.rest.model.cluster.ClusterCreateRequest;
@@ -268,41 +271,11 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 		return deleteRequest("/users/" + uuid);
 	}
 
-	// BINARY
-
-	@Override
-	public LoomClientRequest<AssetResponse> loadBinary(UUID uuid) {
-		return getRequest("binary/" + uuid, AssetResponse.class);
-	}
-
-	@Override
-	public LoomClientRequest<AssetResponse> createBinary(LocationCreateRequest request) {
-		return postRequest("binaries", request, AssetResponse.class);
-	}
-
-	@Override
-	public LoomClientRequest<AssetResponse> updateBinary(AssetUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public LoomClientRequest<NoResponse> deleteBinary(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public LoomClientRequest<AssetListResponse> listBinary(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// ASSET
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteAsset(UUID uuid) {
-		return deleteRequest("assets/" + uuid.toString());
+	public LoomClientRequest<AssetResponse> loadAsset(UUID uuid) {
+		return getRequest("assets/" + uuid, AssetResponse.class);
 	}
 
 	@Override
@@ -312,17 +285,49 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 
 	@Override
 	public LoomClientRequest<AssetResponse> updateAsset(UUID uuid, AssetUpdateRequest request) {
-		return postRequest("assets/" + uuid.toString(), request, AssetResponse.class);
+	return postRequest("assets/" + uuid.toString(), request, AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetResponse> loadAsset(UUID uuid) {
-		return getRequest("assets/" + uuid.toString(), AssetResponse.class);
+	public LoomClientRequest<NoResponse> deleteAsset(UUID uuid) {
+		return deleteRequest("assets/" + uuid.toString());
 	}
 
 	@Override
 	public LoomClientRequest<AssetListResponse> listAssets(UUID startUuid, int pageSize) {
 		LoomClientRequest<AssetListResponse> request = getRequest("assets", AssetListResponse.class);
+		request.addLimit(pageSize);
+		if (startUuid != null) {
+			request.addFrom(startUuid);
+		}
+		return request;
+	}
+
+	// LOCATION
+
+	@Override
+	public LoomClientRequest<NoResponse> deleteLocation(UUID uuid) {
+		return null;
+	}
+
+	@Override
+	public LoomClientRequest<LocationResponse> storeLocation(LocationCreateRequest request) {
+		return postRequest("locations", request, LocationResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<LocationResponse> updateLocation(UUID uuid, LocationUpdateRequest request) {
+		return postRequest("locations/" + uuid.toString(), request, LocationResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<LocationResponse> loadLocation(UUID uuid) {
+		return getRequest("locations/" + uuid.toString(), LocationResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<LocationListResponse> listLocations(UUID startUuid, int pageSize) {
+		LoomClientRequest<LocationListResponse> request = getRequest("locations", LocationListResponse.class);
 		request.addLimit(pageSize);
 		if (startUuid != null) {
 			request.addFrom(startUuid);
