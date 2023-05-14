@@ -1,6 +1,5 @@
 package io.metaloom.loom.client.http;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Duration;
@@ -31,7 +30,7 @@ public class CustomOkHttpClientTest extends AbstractContainerTest {
 			.build()) {
 
 			// Create a collection
-			UserResponse userResponse = client.loadUser("admin").sync();
+			UserResponse userResponse = client.loadUser(USER_UUID).sync();
 			assertNotNull(userResponse);
 		}
 	}

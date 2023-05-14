@@ -15,7 +15,7 @@ public interface EmbeddingMethods {
 
 	LoomClientRequest<EmbeddingResponse> createEmbedding(EmbeddingCreateRequest request);
 
-	LoomClientRequest<EmbeddingResponse> updateEmbedding(EmbeddingUpdateRequest request);
+	LoomClientRequest<EmbeddingResponse> updateEmbedding(UUID uuid, EmbeddingUpdateRequest request);
 
 	LoomClientRequest<EmbeddingListResponse> listEmbeddings(UUID startUuid, int perPage);
 

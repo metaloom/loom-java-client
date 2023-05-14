@@ -15,7 +15,7 @@ public interface ProjectMethods {
 
 	LoomClientRequest<ProjectResponse> createProject(ProjectCreateRequest request);
 
-	LoomClientRequest<ProjectResponse> updateProject(ProjectUpdateRequest request);
+	LoomClientRequest<ProjectResponse> updateProject(UUID uuid, ProjectUpdateRequest request);
 
 	LoomClientRequest<ProjectListResponse> listProject(UUID startUuid, int perPage);
 

@@ -15,7 +15,7 @@ public interface RoleMethods {
 
 	LoomClientRequest<RoleResponse> createRole(RoleCreateRequest request);
 
-	LoomClientRequest<RoleResponse> updateRole(RoleUpdateRequest request);
+	LoomClientRequest<RoleResponse> updateRole(UUID uuid, RoleUpdateRequest request);
 
 	LoomClientRequest<RoleListResponse> listRoles(UUID startUuid, int perPage);
 

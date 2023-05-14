@@ -11,11 +11,11 @@ import io.metaloom.loom.rest.model.user.UserUpdateRequest;
 
 public interface UserMethods {
 
-	LoomClientRequest<UserResponse> loadUser(String username);
+	LoomClientRequest<UserResponse> loadUser(UUID uuid);
 
 	LoomClientRequest<UserResponse> createUser(UserCreateRequest request);
 
-	LoomClientRequest<UserResponse> updateUser(UUID userUuid, UserUpdateRequest request);
+	LoomClientRequest<UserResponse> updateUser(UUID uuid, UserUpdateRequest request);
 
 	LoomClientRequest<UserListResponse> listUsers(UUID startUuid, int perPage);
 

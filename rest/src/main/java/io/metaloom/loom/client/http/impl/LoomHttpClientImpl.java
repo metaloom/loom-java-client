@@ -12,6 +12,7 @@ import io.metaloom.loom.client.http.LoomClientRequest;
 import io.metaloom.loom.client.http.LoomHttpClient;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.annotation.AnnotationCreateRequest;
+import io.metaloom.loom.rest.model.annotation.AnnotationListResponse;
 import io.metaloom.loom.rest.model.annotation.AnnotationResponse;
 import io.metaloom.loom.rest.model.annotation.AnnotationUpdateRequest;
 import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
@@ -247,15 +248,15 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<UserResponse> loadUser(String username) {
-		return getRequest("users/" + username, UserResponse.class);
+	public LoomClientRequest<UserResponse> loadUser(UUID uuid) {
+		return getRequest("users/" + uuid, UserResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<UserResponse> createUser(UserCreateRequest request) {
 		return postRequest("users", request, UserResponse.class);
 	}
-	
+
 	@Override
 	public LoomClientRequest<UserResponse> updateUser(UUID userUuid, UserUpdateRequest request) {
 		return postRequest("users/" + userUuid, request, UserResponse.class);
@@ -285,7 +286,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 
 	@Override
 	public LoomClientRequest<AssetResponse> updateAsset(UUID uuid, AssetUpdateRequest request) {
-	return postRequest("assets/" + uuid.toString(), request, AssetResponse.class);
+		return postRequest("assets/" + uuid.toString(), request, AssetResponse.class);
 	}
 
 	@Override
@@ -339,378 +340,324 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 
 	@Override
 	public LoomClientRequest<ClusterResponse> loadCluster(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/clusters/" + uuid, ClusterResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteCluster(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/clusters/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<ClusterResponse> updateCluster(ClusterUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<ClusterResponse> updateCluster(UUID uuid, ClusterUpdateRequest request) {
+		return postRequest("/clusters/" + uuid, request, ClusterResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<ClusterResponse> createCluster(ClusterCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/clusters", request, ClusterResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<ClusterListResponse> listClusters(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/clusters", ClusterListResponse.class);
 	}
 
 	// PROJECT
 
 	@Override
 	public LoomClientRequest<ProjectResponse> loadProject(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/projects/" + uuid, ProjectResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteProject(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/projects/" + uuid);
 	}
 
 	@Override
 	public LoomClientRequest<ProjectResponse> createProject(ProjectCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/projects", request, ProjectResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<ProjectResponse> updateProject(ProjectUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<ProjectResponse> updateProject(UUID uuid, ProjectUpdateRequest request) {
+		return postRequest("/projects/" + uuid, request, ProjectResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<ProjectListResponse> listProject(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/projects", ProjectListResponse.class);
 	}
 
 	// LIBRARY
 
 	@Override
 	public LoomClientRequest<LibraryResponse> loadLibrary(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/libraries/" + uuid, LibraryResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteLibrary(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/libraries/" + uuid);
 	}
 
 	@Override
 	public LoomClientRequest<LibraryListResponse> listLibrary(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/libraries", LibraryListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<LibraryResponse> updateLibrary(LibraryUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<LibraryResponse> updateLibrary(UUID uuid, LibraryUpdateRequest request) {
+		return postRequest("/libraries/" + uuid, request, LibraryResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<LibraryResponse> createLibrary(LibraryCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/libraries", request, LibraryResponse.class);
 	}
 
 	// ANNOTATION
 
 	@Override
 	public LoomClientRequest<AnnotationResponse> loadAnnotation(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/annotations/" + uuid, AnnotationResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteAnnotation(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/annotations/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<AnnotationResponse> updateAnnotation(AnnotationUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<AnnotationResponse> updateAnnotation(UUID uuid, AnnotationUpdateRequest request) {
+		return postRequest("/annotations/" + uuid, request, AnnotationResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<AnnotationResponse> createAnnotation(AnnotationCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/annotations", request, AnnotationResponse.class);
+	}
+
+	@Override
+	public LoomClientRequest<AnnotationListResponse> listAnnotations(UUID startUuid, int pageSize) {
+		return getRequest("/annotations", AnnotationListResponse.class);
 	}
 
 	// COLLECTION
 
 	@Override
 	public LoomClientRequest<CollectionResponse> loadCollection(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/collections/" + uuid, CollectionResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<CollectionResponse> createCollection(CollectionCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/collections", request, CollectionResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<CollectionResponse> updateCollection(CollectionUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<CollectionResponse> updateCollection(UUID uuid, CollectionUpdateRequest request) {
+		return postRequest("/collections/" + uuid, request, CollectionResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<CollectionListResponse> listCollections(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/collections", CollectionListResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteCollection(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/collections/" + uuid);
 	}
 
 	// REACTION
 
 	@Override
 	public LoomClientRequest<ReactionResponse> loadReaction(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/reactions/" + uuid, ReactionResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteReaction(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/reactions/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<ReactionResponse> updateReaction(ReactionUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<ReactionResponse> updateReaction(UUID uuid, ReactionUpdateRequest request) {
+		return postRequest("/reactions/" + uuid, request, ReactionResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<ReactionResponse> createReaction(ReactionCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/reactions", request, ReactionResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<ReactionListResponse> listReaction(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/reactions", ReactionListResponse.class);
 	}
 
 	// EMBEDDING
 
 	@Override
 	public LoomClientRequest<EmbeddingResponse> loadEmbedding(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/embeddings/" + uuid, EmbeddingResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteEmbedding(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/embeddings/" + uuid);
 	}
 
 	@Override
 	public LoomClientRequest<EmbeddingListResponse> listEmbeddings(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/embeddings", EmbeddingListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<EmbeddingResponse> updateEmbedding(EmbeddingUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<EmbeddingResponse> updateEmbedding(UUID uuid, EmbeddingUpdateRequest request) {
+		return postRequest("/embeddings/" + uuid, request, EmbeddingResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<EmbeddingResponse> createEmbedding(EmbeddingCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/embeddings", EmbeddingResponse.class);
 	}
 
 	// GROUP
 
 	@Override
 	public LoomClientRequest<GroupResponse> loadGroup(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/groups/" + uuid, GroupResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<GroupListResponse> listGroups(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/groups", GroupListResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteGroup(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/groups/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<GroupResponse> updateGroup(GroupUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<GroupResponse> updateGroup(UUID uuid, GroupUpdateRequest request) {
+		return postRequest("/groups/" + uuid, request, GroupResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<GroupResponse> createGroup(GroupCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/groups", request, GroupResponse.class);
 	}
 
 	// COMMENT
 
 	@Override
 	public LoomClientRequest<CommentListResponse> listCommentsForAnnotation(UUID annotationUuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/annotation/" + annotationUuid + "/comments", CommentListResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<CommentResponse> loadComment(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/comments/" + uuid, CommentResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteComment(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/comments/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<CommentResponse> updateComment(CommentUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<CommentResponse> updateComment(UUID uuid, CommentUpdateRequest request) {
+		return postRequest("/comments/" + uuid, request, CommentResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<CommentResponse> createComment(CommentCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/comments", request, CommentResponse.class);
 	}
 
 	// ROLE
 
 	@Override
 	public LoomClientRequest<RoleResponse> loadRole(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/roles/" + uuid, RoleResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteRole(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/roles/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<RoleResponse> updateRole(RoleUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<RoleResponse> updateRole(UUID uuid, RoleUpdateRequest request) {
+		return postRequest("/roles/" + uuid, request, RoleResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<RoleResponse> createRole(RoleCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/roles", request, RoleResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<RoleListResponse> listRoles(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/roles", RoleListResponse.class);
 	}
 
 	// TASK
 
 	@Override
 	public LoomClientRequest<TaskResponse> loadTask(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/tasks/" + uuid, TaskResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteTask(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/tasks/" + uuid);
 	}
 
 	@Override
 	public LoomClientRequest<TaskListResponse> listTasks(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/tasks", TaskListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TaskResponse> updateTask(TaskUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<TaskResponse> updateTask(UUID uuid, TaskUpdateRequest request) {
+		return postRequest("/tasks/" + uuid, request, TaskResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<TaskResponse> createTask(TaskCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/tasks", request, TaskResponse.class);
 	}
 
 	// TOKEN
 
 	@Override
 	public LoomClientRequest<TokenResponse> loadToken(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/tokens/" + uuid, TokenResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<TokenListResponse> listTokens(UUID startUuid, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRequest("/tokens", TokenListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TokenResponse> updateToken(TokenUpdateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoomClientRequest<TokenResponse> updateToken(UUID uuid, TokenUpdateRequest request) {
+		return postRequest("/tokens/" + uuid, request, TokenResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<TokenResponse> createToken(TokenCreateRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRequest("/tokens", request, TokenResponse.class);
 	}
 
 	@Override
 	public LoomClientRequest<NoResponse> deleteToken(UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return deleteRequest("/tokens/" + uuid);
 	}
 
 }

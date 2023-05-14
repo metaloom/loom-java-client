@@ -15,7 +15,7 @@ public interface ClusterMethods {
 
 	LoomClientRequest<ClusterResponse> createCluster(ClusterCreateRequest request);
 
-	LoomClientRequest<ClusterResponse> updateCluster(ClusterUpdateRequest request);
+	LoomClientRequest<ClusterResponse> updateCluster(UUID uuid, ClusterUpdateRequest request);
 	
 	LoomClientRequest<ClusterListResponse> listClusters(UUID startUuid, int perPage);
 

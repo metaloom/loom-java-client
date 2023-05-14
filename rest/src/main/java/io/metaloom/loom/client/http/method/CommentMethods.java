@@ -15,7 +15,7 @@ public interface CommentMethods {
 
 	LoomClientRequest<CommentResponse> createComment(CommentCreateRequest request);
 
-	LoomClientRequest<CommentResponse> updateComment(CommentUpdateRequest request);
+	LoomClientRequest<CommentResponse> updateComment(UUID uuid, CommentUpdateRequest request);
 
 	LoomClientRequest<CommentListResponse> listCommentsForAnnotation(UUID annotationUuid);
 
