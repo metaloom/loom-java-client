@@ -19,10 +19,10 @@ import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
 import io.metaloom.loom.rest.model.asset.AssetListResponse;
 import io.metaloom.loom.rest.model.asset.AssetResponse;
 import io.metaloom.loom.rest.model.asset.AssetUpdateRequest;
-import io.metaloom.loom.rest.model.asset.location.LocationCreateRequest;
+import io.metaloom.loom.rest.model.asset.location.AssetLocationCreateRequest;
 import io.metaloom.loom.rest.model.asset.location.LocationListResponse;
-import io.metaloom.loom.rest.model.asset.location.LocationResponse;
-import io.metaloom.loom.rest.model.asset.location.LocationUpdateRequest;
+import io.metaloom.loom.rest.model.asset.location.AssetLocationResponse;
+import io.metaloom.loom.rest.model.asset.location.AssetLocationUpdateRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
 import io.metaloom.loom.rest.model.cluster.ClusterCreateRequest;
@@ -312,18 +312,18 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<LocationResponse> storeLocation(LocationCreateRequest request) {
-		return postRequest("locations", request, LocationResponse.class);
+	public LoomClientRequest<AssetLocationResponse> storeLocation(AssetLocationCreateRequest request) {
+		return postRequest("locations", request, AssetLocationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<LocationResponse> updateLocation(UUID uuid, LocationUpdateRequest request) {
-		return postRequest("locations/" + uuid.toString(), request, LocationResponse.class);
+	public LoomClientRequest<AssetLocationResponse> updateLocation(UUID uuid, AssetLocationUpdateRequest request) {
+		return postRequest("locations/" + uuid.toString(), request, AssetLocationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<LocationResponse> loadLocation(UUID uuid) {
-		return getRequest("locations/" + uuid.toString(), LocationResponse.class);
+	public LoomClientRequest<AssetLocationResponse> loadLocation(UUID uuid) {
+		return getRequest("locations/" + uuid.toString(), AssetLocationResponse.class);
 	}
 
 	@Override
@@ -522,7 +522,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 
 	@Override
 	public LoomClientRequest<EmbeddingResponse> createEmbedding(EmbeddingCreateRequest request) {
-		return getRequest("/embeddings", EmbeddingResponse.class);
+		return postRequest("/embeddings", request, EmbeddingResponse.class);
 	}
 
 	// GROUP
