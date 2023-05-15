@@ -263,8 +263,8 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<UserListResponse> listUsers(UUID startUuid, int perPage) {
-		return getRequest("users", UserListResponse.class);
+	public LoomClientRequest<UserListResponse> listUsers(UUID startUuid, Integer perPage) {
+		return getRequest("users", UserListResponse.class).addFrom(startUuid).addLimit(perPage);
 	}
 
 	@Override

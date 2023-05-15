@@ -1,7 +1,6 @@
 package io.metaloom.loom.client.http.impl;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,16 +99,6 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	public LoomClientRequest<T> addQueryParameter(String key, String value) {
 		urlBuilder.addQueryParameter(key, value);
 		return this;
-	}
-
-	@Override
-	public LoomClientRequest<T> addLimit(int limit) {
-		return addQueryParameter("limit", String.valueOf(limit));
-	}
-
-	@Override
-	public LoomClientRequest<T> addFrom(UUID startUuid) {
-		return addQueryParameter("from", startUuid.toString());
 	}
 
 	@Override
@@ -279,6 +268,11 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 				}
 			});
 		});
+	}
+
+	@Override
+	public LoomClientRequest<T> self() {
+		return this;
 	}
 
 }

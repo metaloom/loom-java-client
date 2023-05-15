@@ -1,18 +1,17 @@
 package io.metaloom.loom.client.http;
 
-import java.util.UUID;
-
 import com.fasterxml.jackson.databind.JsonNode;
 
 import io.metaloom.loom.client.http.impl.HttpErrorException;
 import io.metaloom.loom.client.http.impl.LoomClientRequestImpl;
+import io.metaloom.loom.client.http.parameter.QueryParameters;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestRequestModel;
 import io.metaloom.loom.rest.model.RestResponseModel;
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
-public interface LoomClientRequest<T extends RestResponseModel<T>> {
+public interface LoomClientRequest<T extends RestResponseModel<T>> extends QueryParameters<T> {
 
 	public static final String PUT = "PUT";
 	public static final String PATCH = "PATCH";
@@ -69,15 +68,6 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> {
 	}
 
 	/**
-	 * Add an additional query parameter.
-	 * 
-	 * @param key
-	 * @param value
-	 * @return Fluent API
-	 */
-	LoomClientRequest<T> addQueryParameter(String key, String value);
-
-	/**
 	 * Returns a single which can be used to execute the request and listen to the result.
 	 * 
 	 * @return
@@ -99,9 +89,5 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> {
 	 * @throws HttpErrorException
 	 */
 	T sync() throws HttpErrorException;
-
-	LoomClientRequest<T> addLimit(int pageSize);
-
-	LoomClientRequest<T> addFrom(UUID startUuid);
 
 }

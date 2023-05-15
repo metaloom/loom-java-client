@@ -17,7 +17,15 @@ public interface UserMethods {
 
 	LoomClientRequest<UserResponse> updateUser(UUID uuid, UserUpdateRequest request);
 
-	LoomClientRequest<UserListResponse> listUsers(UUID startUuid, int perPage);
+	default LoomClientRequest<UserListResponse> listUsers() {
+		return listUsers(null, null);
+	}
+
+	default LoomClientRequest<UserListResponse> listUsers(Integer perPage) {
+		return listUsers(null, perPage);
+	}
+
+	LoomClientRequest<UserListResponse> listUsers(UUID startUuid, Integer perPage);
 
 	LoomClientRequest<NoResponse> deleteUser(UUID uuid);
 }
