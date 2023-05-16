@@ -263,8 +263,8 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<UserListResponse> listUsers(UUID startUuid, Integer perPage) {
-		return getRequest("users", UserListResponse.class).addFrom(startUuid).addLimit(perPage);
+	public LoomClientRequest<UserListResponse> listUsers() {
+		return getRequest("users", UserListResponse.class);
 	}
 
 	@Override
@@ -295,13 +295,8 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<AssetListResponse> listAssets(UUID startUuid, int pageSize) {
-		LoomClientRequest<AssetListResponse> request = getRequest("assets", AssetListResponse.class);
-		request.addLimit(pageSize);
-		if (startUuid != null) {
-			request.addFrom(startUuid);
-		}
-		return request;
+	public LoomClientRequest<AssetListResponse> listAssets() {
+		return getRequest("assets", AssetListResponse.class);
 	}
 
 	// LOCATION
@@ -327,13 +322,8 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<LocationListResponse> listLocations(UUID startUuid, int pageSize) {
-		LoomClientRequest<LocationListResponse> request = getRequest("locations", LocationListResponse.class);
-		request.addLimit(pageSize);
-		if (startUuid != null) {
-			request.addFrom(startUuid);
-		}
-		return request;
+	public LoomClientRequest<LocationListResponse> listLocations() {
+		return getRequest("locations", LocationListResponse.class);
 	}
 
 	// CLUSTER
@@ -359,7 +349,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<ClusterListResponse> listClusters(UUID startUuid, int perPage) {
+	public LoomClientRequest<ClusterListResponse> listClusters() {
 		return getRequest("/clusters", ClusterListResponse.class);
 	}
 
@@ -386,7 +376,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<ProjectListResponse> listProject(UUID startUuid, int perPage) {
+	public LoomClientRequest<ProjectListResponse> listProject() {
 		return getRequest("/projects", ProjectListResponse.class);
 	}
 
@@ -403,7 +393,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<LibraryListResponse> listLibrary(UUID startUuid, int perPage) {
+	public LoomClientRequest<LibraryListResponse> listLibrary() {
 		return getRequest("/libraries", LibraryListResponse.class);
 	}
 
@@ -440,7 +430,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<AnnotationListResponse> listAnnotations(UUID startUuid, int pageSize) {
+	public LoomClientRequest<AnnotationListResponse> listAnnotations() {
 		return getRequest("/annotations", AnnotationListResponse.class);
 	}
 
@@ -462,7 +452,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<CollectionListResponse> listCollections(UUID startUuid, int perPage) {
+	public LoomClientRequest<CollectionListResponse> listCollections() {
 		return getRequest("/collections", CollectionListResponse.class);
 	}
 
@@ -494,7 +484,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<ReactionListResponse> listReaction(UUID startUuid, int perPage) {
+	public LoomClientRequest<ReactionListResponse> listReaction() {
 		return getRequest("/reactions", ReactionListResponse.class);
 	}
 
@@ -511,7 +501,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<EmbeddingListResponse> listEmbeddings(UUID startUuid, int perPage) {
+	public LoomClientRequest<EmbeddingListResponse> listEmbeddings() {
 		return getRequest("/embeddings", EmbeddingListResponse.class);
 	}
 
@@ -533,7 +523,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<GroupListResponse> listGroups(UUID startUuid, int perPage) {
+	public LoomClientRequest<GroupListResponse> listGroups() {
 		return getRequest("/groups", GroupListResponse.class);
 	}
 
@@ -602,7 +592,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<RoleListResponse> listRoles(UUID startUuid, int perPage) {
+	public LoomClientRequest<RoleListResponse> listRoles() {
 		return getRequest("/roles", RoleListResponse.class);
 	}
 
@@ -619,7 +609,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<TaskListResponse> listTasks(UUID startUuid, int perPage) {
+	public LoomClientRequest<TaskListResponse> listTasks() {
 		return getRequest("/tasks", TaskListResponse.class);
 	}
 
@@ -641,7 +631,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<TokenListResponse> listTokens(UUID startUuid, int perPage) {
+	public LoomClientRequest<TokenListResponse> listTokens() {
 		return getRequest("/tokens", TokenListResponse.class);
 	}
 

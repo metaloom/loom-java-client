@@ -17,7 +17,7 @@ public interface AnnotationMethods {
 
 	LoomClientRequest<AnnotationResponse> updateAnnotation(UUID uuid, AnnotationUpdateRequest request);
 
-	LoomClientRequest<AnnotationListResponse> listAnnotations(UUID startUuid, int pageSize);
+	LoomClientRequest<AnnotationListResponse> listAnnotations();
 
 	LoomClientRequest<NoResponse> deleteAnnotation(UUID uuid);
 }

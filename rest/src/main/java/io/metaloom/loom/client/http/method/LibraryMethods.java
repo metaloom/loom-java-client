@@ -17,7 +17,7 @@ public interface LibraryMethods {
 
 	LoomClientRequest<LibraryResponse> updateLibrary(UUID uuid, LibraryUpdateRequest request);
 
-	LoomClientRequest<LibraryListResponse> listLibrary(UUID startUuid, int perPage);
+	LoomClientRequest<LibraryListResponse> listLibrary();
 
 	LoomClientRequest<NoResponse> deleteLibrary(UUID uuid);
 }

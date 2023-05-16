@@ -19,6 +19,6 @@ public interface AssetLocationMethods {
 
 	LoomClientRequest<AssetLocationResponse> updateLocation(UUID uuid, AssetLocationUpdateRequest request);
 
-	LoomClientRequest<LocationListResponse> listLocations(UUID startUuid, int perPage);
+	LoomClientRequest<LocationListResponse> listLocations();
 
 }

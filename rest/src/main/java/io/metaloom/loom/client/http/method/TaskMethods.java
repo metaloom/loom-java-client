@@ -17,7 +17,7 @@ public interface TaskMethods {
 
 	LoomClientRequest<TaskResponse> updateTask(UUID uuid, TaskUpdateRequest request);
 
-	LoomClientRequest<TaskListResponse> listTasks(UUID startUuid, int perPage);
+	LoomClientRequest<TaskListResponse> listTasks();
 
 	LoomClientRequest<NoResponse> deleteTask(UUID uuid);
 

@@ -17,7 +17,7 @@ public interface ReactionMethods {
 
 	LoomClientRequest<ReactionResponse> updateReaction(UUID uuid, ReactionUpdateRequest request);
 
-	LoomClientRequest<ReactionListResponse> listReaction(UUID startUuid, int perPage);
+	LoomClientRequest<ReactionListResponse> listReaction();
 
 	LoomClientRequest<NoResponse> deleteReaction(UUID uuid);
 }

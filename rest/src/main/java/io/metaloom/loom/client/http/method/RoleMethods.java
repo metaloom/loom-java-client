@@ -17,7 +17,7 @@ public interface RoleMethods {
 
 	LoomClientRequest<RoleResponse> updateRole(UUID uuid, RoleUpdateRequest request);
 
-	LoomClientRequest<RoleListResponse> listRoles(UUID startUuid, int perPage);
+	LoomClientRequest<RoleListResponse> listRoles();
 
 	LoomClientRequest<NoResponse> deleteRole(UUID uuid);
 }

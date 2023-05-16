@@ -17,7 +17,7 @@ public interface TokenMethods {
 
 	LoomClientRequest<TokenResponse> updateToken(UUID uuid, TokenUpdateRequest request);
 
-	LoomClientRequest<TokenListResponse> listTokens(UUID startUuid, int perPage);
+	LoomClientRequest<TokenListResponse> listTokens();
 
 	LoomClientRequest<NoResponse> deleteToken(UUID uuid);
 

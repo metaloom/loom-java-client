@@ -17,7 +17,7 @@ public interface EmbeddingMethods {
 
 	LoomClientRequest<EmbeddingResponse> updateEmbedding(UUID uuid, EmbeddingUpdateRequest request);
 
-	LoomClientRequest<EmbeddingListResponse> listEmbeddings(UUID startUuid, int perPage);
+	LoomClientRequest<EmbeddingListResponse> listEmbeddings();
 
 	LoomClientRequest<NoResponse> deleteEmbedding(UUID uuid);
 }

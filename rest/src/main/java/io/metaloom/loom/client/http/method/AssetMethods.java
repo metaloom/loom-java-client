@@ -19,5 +19,5 @@ public interface AssetMethods {
 
 	LoomClientRequest<AssetResponse> updateAsset(UUID uuid, AssetUpdateRequest request);
 
-	LoomClientRequest<AssetListResponse> listAssets(UUID startUuid, int pageSize);
+	LoomClientRequest<AssetListResponse> listAssets();
 }

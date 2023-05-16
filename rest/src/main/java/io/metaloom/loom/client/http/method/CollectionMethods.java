@@ -17,7 +17,7 @@ public interface CollectionMethods {
 
 	LoomClientRequest<CollectionResponse> updateCollection(UUID uuid, CollectionUpdateRequest request);
 
-	LoomClientRequest<CollectionListResponse> listCollections(UUID startUuid, int perPage);
+	LoomClientRequest<CollectionListResponse> listCollections();
 
 	LoomClientRequest<NoResponse> deleteCollection(UUID uuid);
 
