@@ -108,19 +108,21 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	 * @param scheme
 	 * @param hostname
 	 * @param port
+	 * @param pathPrefix
 	 * @param connectTimeout
 	 * @param readTimeout
 	 * @param writeTimeout
 	 */
-	public LoomHttpClientImpl(OkHttpClient okClient, String scheme, String hostname, int port, Duration connectTimeout, Duration readTimeout,
+	public LoomHttpClientImpl(OkHttpClient okClient, String scheme, String hostname, int port, String pathPrefix, Duration connectTimeout, Duration readTimeout,
 		Duration writeTimeout) {
-		super(okClient, scheme, hostname, port, connectTimeout, readTimeout, writeTimeout);
+		super(okClient, scheme, hostname, port, pathPrefix, connectTimeout, readTimeout, writeTimeout);
 	}
 
 	public static class Builder {
 
 		private String scheme = "http";
 		private String hostname = "localhost";
+		private String pathPrefix = "";
 		private int port = 6333;
 
 		private Duration connectTimeout = Duration.ofMillis(10_000);
@@ -141,7 +143,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 				okClient = createDefaultOkHttpClient();
 			}
 
-			return new LoomHttpClientImpl(okClient, scheme, hostname, port, connectTimeout, readTimeout, writeTimeout);
+			return new LoomHttpClientImpl(okClient, scheme, hostname, port, pathPrefix, connectTimeout, readTimeout, writeTimeout);
 		}
 
 		private OkHttpClient createDefaultOkHttpClient() {

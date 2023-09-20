@@ -14,7 +14,6 @@ import io.metaloom.loom.client.http.LoomHttpClient;
 import io.metaloom.loom.rest.json.Json;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestModel;
-import io.metaloom.loom.rest.model.RestRequestModel;
 import io.metaloom.loom.rest.model.RestResponseModel;
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.Call;
@@ -58,6 +57,8 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 			.scheme(loomClient.getScheme())
 			.host(loomClient.getHostname())
 			.port(loomClient.getPort())
+			.addEncodedPathSegments(loomClient.getPathPrefix())
+			.addEncodedPathSegments(LoomHttpClient.API_V1_PATH)
 			.addPathSegments(path);
 	}
 

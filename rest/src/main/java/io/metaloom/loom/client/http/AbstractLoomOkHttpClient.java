@@ -18,9 +18,9 @@ public abstract class AbstractLoomOkHttpClient extends AbstractLoomClient {
 
 	private OkHttpClient okClient;
 
-	public AbstractLoomOkHttpClient(OkHttpClient okClient, String scheme, String hostname, int port, Duration connectTimeout, Duration readTimeout,
+	public AbstractLoomOkHttpClient(OkHttpClient okClient, String scheme, String hostname, int port, String pathPrefix, Duration connectTimeout, Duration readTimeout,
 		Duration writeTimeout) {
-		super(scheme, hostname, port, connectTimeout, readTimeout, writeTimeout);
+		super(scheme, hostname, port, pathPrefix, connectTimeout, readTimeout, writeTimeout);
 		this.okClient = okClient;
 	}
 

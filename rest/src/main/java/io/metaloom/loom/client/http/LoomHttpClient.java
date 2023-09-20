@@ -10,6 +10,8 @@ public interface LoomHttpClient extends ClientMethods, ClientSettings, AutoClose
 		return LoomHttpClientImpl.builder();
 	}
 
+	String API_V1_PATH = "/api/v1";
+
 	/**
 	 * Return the configured protocol scheme.
 	 *
@@ -30,6 +32,13 @@ public interface LoomHttpClient extends ClientMethods, ClientSettings, AutoClose
 	 * @return
 	 */
 	int getPort();
+
+	/**
+	 * Return the configured prefix for the API calls.
+	 * 
+	 * @return
+	 */
+	String getPathPrefix();
 
 	/**
 	 * Close the client and release all resources.
