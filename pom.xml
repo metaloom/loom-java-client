@@ -13,7 +13,7 @@
   </parent>
 
   <packaging>pom</packaging>
-  <name>Loom - Java Client</name>
+  <name>Loom :: Java Client</name>
   <description>Java client for REST / gRPC connections to the Loom server.</description>
   <inceptionYear>2023</inceptionYear>
 
@@ -43,25 +43,25 @@
         <version>${project.version}</version>
       </dependency>
 
-
+			<!-- Client / Local dependencies -->
       <dependency>
         <groupId>io.metaloom.loom.client</groupId>
         <artifactId>loom-client-common</artifactId>
-        <version>${loom.version}</version>
+        <version>${project.version}</version>
       </dependency>
 
-      <!-- Loom -->
+      <!-- Loom Shared-->
       <dependency>
-        <groupId>io.metaloom.loom</groupId>
-        <artifactId>loom-proto</artifactId>
-        <version>${loom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.metaloom.loom</groupId>
+        <groupId>io.metaloom.loom.shared</groupId>
         <artifactId>loom-rest-model</artifactId>
         <version>${loom.version}</version>
       </dependency>
-      
+			<dependency>
+        <groupId>io.metaloom.loom.shared</groupId>
+        <artifactId>loom-proto</artifactId>
+        <version>${loom.version}</version>
+      </dependency>
+
       <!-- Test -->
       <dependency>
         <groupId>io.metaloom.loom.test</groupId>

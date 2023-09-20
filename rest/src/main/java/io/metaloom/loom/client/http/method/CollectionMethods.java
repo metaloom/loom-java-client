@@ -11,14 +11,14 @@ import io.metaloom.loom.rest.model.collection.CollectionUpdateRequest;
 
 public interface CollectionMethods {
 
-	LoomClientRequest<CollectionResponse> loadCollection(UUID uuid);
+	LoomClientRequest<CollectionResponse> loadCollection(UUID collectionUuid);
 
 	LoomClientRequest<CollectionResponse> createCollection(CollectionCreateRequest request);
 
-	LoomClientRequest<CollectionResponse> updateCollection(UUID uuid, CollectionUpdateRequest request);
+	LoomClientRequest<CollectionResponse> updateCollection(UUID collectionUuid, CollectionUpdateRequest request);
 
 	LoomClientRequest<CollectionListResponse> listCollections();
 
-	LoomClientRequest<NoResponse> deleteCollection(UUID uuid);
+	LoomClientRequest<NoResponse> deleteCollection(UUID collectionUuid);
 
 }

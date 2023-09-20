@@ -36,10 +36,6 @@ public interface QueryParameters<T extends RestResponseModel<T>> {
 		return addQueryParameter(QueryParameterKey.FILTER.key(), filter.toString());
 	}
 
-	default LoomClientRequest<T> addEqualsFilter(StringFilterKey key, String value) {
-		return addQueryParameter(QueryParameterKey.FILTER.key(), key.eq(value).toString());
-	}
-
 	default LoomClientRequest<T> sortBy(SortKey key) {
 		return addQueryParameter(QueryParameterKey.SORT.key(), key.toString());
 	}
@@ -48,12 +44,16 @@ public interface QueryParameters<T extends RestResponseModel<T>> {
 		return addQueryParameter(QueryParameterKey.DIRECTION.key(), direction.toString());
 	}
 
-	default LoomClientRequest<T> addEqualsFilter(SizeFilterKey key, String value) {
+	default LoomClientRequest<T> addEquals(SizeFilterKey key, String value) {
 		return addQueryParameter(QueryParameterKey.FILTER.key(), key.eq(value).toString());
 	}
 
-	default LoomClientRequest<T> addEqualsFilter(DurationFilterKey key, Duration duration) {
+	default LoomClientRequest<T> addEquals(DurationFilterKey key, Duration duration) {
 		return addQueryParameter(QueryParameterKey.FILTER.key(), key.eq(duration).toString());
+	}
+
+	default LoomClientRequest<T> addEquals(StringFilterKey key, String value) {
+		return addQueryParameter(QueryParameterKey.FILTER.key(), key.eq(value).toString());
 	}
 
 	LoomClientRequest<T> self();

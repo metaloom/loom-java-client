@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import io.metaloom.loom.client.http.impl.HttpErrorException;
 import io.metaloom.loom.rest.model.RestResponseModel;
 import io.metaloom.loom.rest.model.common.AbstractResponse;
-import io.metaloom.loom.rest.model.error.ErrorResponse;
+import io.metaloom.loom.rest.model.message.GenericMessageResponse;
 
 public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 
@@ -56,8 +56,8 @@ public abstract class AbstractHTTPClientTest extends AbstractContainerTest {
 			assertSuccess((AbstractResponse) response);
 			return response;
 		} catch (HttpErrorException e) {
-			ErrorResponse error = e.getError();
-			fail("Request failed with error " + error.getStatus());
+			GenericMessageResponse error = e.getResponse();
+			fail("Request failed with error " + error.getMessage());
 			return null;
 		}
 	}

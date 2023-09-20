@@ -6,6 +6,7 @@ import static io.metaloom.loom.client.http.LoomClientRequest.PATCH;
 import static io.metaloom.loom.client.http.LoomClientRequest.POST;
 import static io.metaloom.loom.client.http.LoomClientRequest.PUT;
 
+import java.io.InputStream;
 import java.time.Duration;
 
 import io.metaloom.loom.rest.model.NoResponse;
@@ -37,36 +38,40 @@ public abstract class AbstractLoomOkHttpClient extends AbstractLoomClient {
 		// Not needed for OkClient
 	}
 
-	// @Override
-	// public LoomClientRequest<LoomBinaryResponse> download(String collectionName, String snapshotName) {
-	// return getRequest("download/" + collectionName + "/snapshots/" + snapshotName, LoomBinaryResponse.class);
-	// }
+	protected <T extends RestResponseModel<T>> LoomClientRequest<T> postUploadRequest(String path, Class<T> responseClass,
+		InputStream binaryData, String mimeType) {
+		return LoomClientRequest.createBinaryRequest(POST, path, this, okClient, responseClass, binaryData, mimeType);
+	}
+
+	protected LoomClientRequest<LoomBinaryResponse> getDownloadRequest(String path) {
+		return LoomClientRequest.createDownloadRequest(GET, path, this, okClient, LoomBinaryResponse.class);
+	}
 
 	protected <T extends RestResponseModel<T>> LoomClientRequest<T> deleteRequest(String path, Class<T> responseClass) {
-		return LoomClientRequest.create(DELETE, path, this, okClient, responseClass);
+		return LoomClientRequest.createNoBodyRequest(DELETE, path, this, okClient, responseClass);
 	}
 
 	protected LoomClientRequest<NoResponse> deleteRequest(String path) {
-		return LoomClientRequest.create(DELETE, path, this, okClient);
+		return LoomClientRequest.createNoResponseRequest(DELETE, path, this, okClient);
 	}
 
 	protected <T extends RestResponseModel<T>> LoomClientRequest<T> getRequest(String path, Class<T> responseClass) {
-		return LoomClientRequest.create(GET, path, this, okClient, responseClass);
+		return LoomClientRequest.createNoBodyRequest(GET, path, this, okClient, responseClass);
 	}
 
 	protected <T extends RestResponseModel<T>> LoomClientRequest<T> postRequest(String path, RestRequestModel request, Class<T> responseClass) {
-		return LoomClientRequest.create(POST, path, this, okClient, request, responseClass);
+		return LoomClientRequest.createJsonRequest(POST, path, this, okClient, request, responseClass);
 	}
 
 	protected <T extends RestResponseModel<T>> LoomClientRequest<T> postRequest(String path, Class<T> responseClass) {
-		return LoomClientRequest.create(POST, path, this, okClient, responseClass);
+		return LoomClientRequest.createNoBodyRequest(POST, path, this, okClient, responseClass);
 	}
 
 	protected <T extends RestResponseModel<T>> LoomClientRequest<T> putRequest(String path, RestRequestModel request, Class<T> responseClass) {
-		return LoomClientRequest.create(PUT, path, this, okClient, request, responseClass);
+		return LoomClientRequest.createJsonRequest(PUT, path, this, okClient, request, responseClass);
 	}
 
 	protected <T extends RestResponseModel<T>> LoomClientRequest<T> patchRequest(String path, RestRequestModel request, Class<T> responseClass) {
-		return LoomClientRequest.create(PATCH, path, this, okClient, request, responseClass);
+		return LoomClientRequest.createJsonRequest(PATCH, path, this, okClient, request, responseClass);
 	}
 }

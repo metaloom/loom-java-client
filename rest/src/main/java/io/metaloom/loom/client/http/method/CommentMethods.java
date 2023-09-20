@@ -11,14 +11,14 @@ import io.metaloom.loom.rest.model.comment.CommentUpdateRequest;
 
 public interface CommentMethods {
 
-	LoomClientRequest<CommentResponse> loadComment(UUID uuid);
+	LoomClientRequest<CommentResponse> loadComment(UUID commentUuid);
 
 	LoomClientRequest<CommentResponse> createComment(CommentCreateRequest request);
 
-	LoomClientRequest<CommentResponse> updateComment(UUID uuid, CommentUpdateRequest request);
+	LoomClientRequest<CommentResponse> updateComment(UUID commentUuid, CommentUpdateRequest request);
 
 	LoomClientRequest<CommentListResponse> listCommentsForAnnotation(UUID annotationUuid);
 
-	LoomClientRequest<NoResponse> deleteComment(UUID uuid);
+	LoomClientRequest<NoResponse> deleteComment(UUID commentUuid);
 
 }

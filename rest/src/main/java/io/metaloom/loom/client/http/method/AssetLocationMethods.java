@@ -5,20 +5,20 @@ import java.util.UUID;
 import io.metaloom.loom.client.http.LoomClientRequest;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.asset.location.AssetLocationCreateRequest;
-import io.metaloom.loom.rest.model.asset.location.LocationListResponse;
+import io.metaloom.loom.rest.model.asset.location.AssetLocationListResponse;
 import io.metaloom.loom.rest.model.asset.location.AssetLocationResponse;
 import io.metaloom.loom.rest.model.asset.location.AssetLocationUpdateRequest;
 
 public interface AssetLocationMethods {
 
-	LoomClientRequest<AssetLocationResponse> loadLocation(UUID uuid);
+	LoomClientRequest<AssetLocationResponse> loadLocation(UUID locationUuid);
 
-	LoomClientRequest<NoResponse> deleteLocation(UUID uuid);
+	LoomClientRequest<NoResponse> deleteLocation(UUID locationUuid);
 
-	LoomClientRequest<AssetLocationResponse> storeLocation(AssetLocationCreateRequest request);
+	LoomClientRequest<AssetLocationResponse> createLocation(AssetLocationCreateRequest request);
 
-	LoomClientRequest<AssetLocationResponse> updateLocation(UUID uuid, AssetLocationUpdateRequest request);
+	LoomClientRequest<AssetLocationResponse> updateLocation(UUID locationUuid, AssetLocationUpdateRequest request);
 
-	LoomClientRequest<LocationListResponse> listLocations();
+	LoomClientRequest<AssetLocationListResponse> listLocations();
 
 }

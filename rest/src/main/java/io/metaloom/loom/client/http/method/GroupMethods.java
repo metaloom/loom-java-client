@@ -11,13 +11,13 @@ import io.metaloom.loom.rest.model.group.GroupUpdateRequest;
 
 public interface GroupMethods {
 
-	LoomClientRequest<GroupResponse> loadGroup(UUID uuid);
+	LoomClientRequest<GroupResponse> loadGroup(UUID groupUuid);
 
 	LoomClientRequest<GroupResponse> createGroup(GroupCreateRequest request);
 
-	LoomClientRequest<GroupResponse> updateGroup(UUID uuid, GroupUpdateRequest request);
+	LoomClientRequest<GroupResponse> updateGroup(UUID groupUuid, GroupUpdateRequest request);
 
 	LoomClientRequest<GroupListResponse> listGroups();
 
-	LoomClientRequest<NoResponse> deleteGroup(UUID uuid);
+	LoomClientRequest<NoResponse> deleteGroup(UUID groupUuid);
 }

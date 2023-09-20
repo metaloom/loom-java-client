@@ -11,14 +11,14 @@ import io.metaloom.loom.rest.model.token.TokenUpdateRequest;
 
 public interface TokenMethods {
 
-	LoomClientRequest<TokenResponse> loadToken(UUID uuid);
+	LoomClientRequest<TokenResponse> loadToken(UUID tokenUuid);
 
 	LoomClientRequest<TokenResponse> createToken(TokenCreateRequest request);
 
-	LoomClientRequest<TokenResponse> updateToken(UUID uuid, TokenUpdateRequest request);
+	LoomClientRequest<TokenResponse> updateToken(UUID tokenUuid, TokenUpdateRequest request);
 
 	LoomClientRequest<TokenListResponse> listTokens();
 
-	LoomClientRequest<NoResponse> deleteToken(UUID uuid);
+	LoomClientRequest<NoResponse> deleteToken(UUID tokenUuid);
 
 }

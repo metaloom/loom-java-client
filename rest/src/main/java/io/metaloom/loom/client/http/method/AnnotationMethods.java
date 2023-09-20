@@ -11,13 +11,13 @@ import io.metaloom.loom.rest.model.annotation.AnnotationUpdateRequest;
 
 public interface AnnotationMethods {
 
-	LoomClientRequest<AnnotationResponse> loadAnnotation(UUID uuid);
+	LoomClientRequest<AnnotationResponse> loadAnnotation(UUID annotationUuid);
 
 	LoomClientRequest<AnnotationResponse> createAnnotation(AnnotationCreateRequest request);
 
-	LoomClientRequest<AnnotationResponse> updateAnnotation(UUID uuid, AnnotationUpdateRequest request);
+	LoomClientRequest<AnnotationResponse> updateAnnotation(UUID annotationUuid, AnnotationUpdateRequest request);
 
 	LoomClientRequest<AnnotationListResponse> listAnnotations();
 
-	LoomClientRequest<NoResponse> deleteAnnotation(UUID uuid);
+	LoomClientRequest<NoResponse> deleteAnnotation(UUID annotationUuid);
 }

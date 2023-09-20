@@ -46,7 +46,7 @@
       <artifactId>loom-client-common</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.metaloom.loom</groupId>
+      <groupId>io.metaloom.loom.shared</groupId>
       <artifactId>loom-proto</artifactId>
     </dependency>
     <dependency>

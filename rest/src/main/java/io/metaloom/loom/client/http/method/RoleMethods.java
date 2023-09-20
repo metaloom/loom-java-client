@@ -11,13 +11,13 @@ import io.metaloom.loom.rest.model.role.RoleUpdateRequest;
 
 public interface RoleMethods {
 
-	LoomClientRequest<RoleResponse> loadRole(UUID uuid);
+	LoomClientRequest<RoleResponse> loadRole(UUID roleUuid);
 
 	LoomClientRequest<RoleResponse> createRole(RoleCreateRequest request);
 
-	LoomClientRequest<RoleResponse> updateRole(UUID uuid, RoleUpdateRequest request);
+	LoomClientRequest<RoleResponse> updateRole(UUID roleUuid, RoleUpdateRequest request);
 
 	LoomClientRequest<RoleListResponse> listRoles();
 
-	LoomClientRequest<NoResponse> deleteRole(UUID uuid);
+	LoomClientRequest<NoResponse> deleteRole(UUID roleUuid);
 }

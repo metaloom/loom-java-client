@@ -20,7 +20,6 @@ import io.reactivex.rxjava3.core.Single;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
@@ -31,8 +30,6 @@ import okhttp3.ResponseBody;
 public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements LoomClientRequest<T> {
 
 	public static final Logger log = LoggerFactory.getLogger(LoomClientRequestImpl.class);
-
-	public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
 	private final LoomHttpClient loomClient;
 
@@ -46,25 +43,14 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 
 	private final String method;
 
-	public LoomClientRequestImpl(String method, String path, LoomHttpClient loomClient, OkHttpClient client, RestRequestModel requestModel,
-		Class<T> responseClass) {
+	public LoomClientRequestImpl(String method, String path, LoomHttpClient loomClient, OkHttpClient client,
+		Class<T> responseClass, RequestBody requestBody) {
 		this.loomClient = loomClient;
 		this.okClient = client;
 		this.method = method;
 		this.urlBuilder = createUrlBuilder(path);
 		this.responseClass = responseClass;
-
-		if (requestModel != null) {
-			String bodyStr = Json.parse(requestModel);
-			if (log.isDebugEnabled()) {
-				log.debug("Sending request: " + method + " " + path + "\n" + bodyStr);
-			}
-			this.body = RequestBody.create(bodyStr, MEDIA_TYPE_JSON);
-		} else {
-			if (method.equals("POST")) {
-				this.body = RequestBody.create("", null);
-			}
-		}
+		this.body = requestBody;
 	}
 
 	private okhttp3.HttpUrl.Builder createUrlBuilder(String path) {
@@ -129,7 +115,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 					log.debug("Failed request with code {" + response.code() + "} and body:\n" + bodyStr);
 				}
 
-				throw new HttpErrorException("Request failed {" + response.message() + "}", response.code(), bodyStr);
+				throw new HttpErrorException("Request failed {" + response.message() + "}", response.code(), response.message(), bodyStr);
 			}
 
 			return bodyStr;
@@ -163,7 +149,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 					}
 				}
 
-				throw new HttpErrorException("Request failed {" + response.message() + "}", response.code(), bodyStr);
+				throw new HttpErrorException("Request failed {" + response.message() + "}", response.code(), response.message(), bodyStr);
 			}
 		} catch (IOException e1) {
 			throw new HttpErrorException("Error while excuting request", e1);
@@ -252,7 +238,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 							}
 						}
 						if (!response.isSuccessful()) {
-							sub.onError(new HttpErrorException("Request failed", response.code(), bodyStr));
+							sub.onError(new HttpErrorException("Request failed", response.code(), response.message(), bodyStr));
 							return;
 						}
 						if (RestModel.class.isAssignableFrom(responseClass)) {

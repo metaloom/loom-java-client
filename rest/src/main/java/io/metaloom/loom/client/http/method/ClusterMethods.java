@@ -11,14 +11,14 @@ import io.metaloom.loom.rest.model.cluster.ClusterUpdateRequest;
 
 public interface ClusterMethods {
 
-	LoomClientRequest<ClusterResponse> loadCluster(UUID uuid);
+	LoomClientRequest<ClusterResponse> loadCluster(UUID clusterUuid);
 
 	LoomClientRequest<ClusterResponse> createCluster(ClusterCreateRequest request);
 
-	LoomClientRequest<ClusterResponse> updateCluster(UUID uuid, ClusterUpdateRequest request);
+	LoomClientRequest<ClusterResponse> updateCluster(UUID clusterUuid, ClusterUpdateRequest request);
 	
 	LoomClientRequest<ClusterListResponse> listClusters();
 
-	LoomClientRequest<NoResponse> deleteCluster(UUID uuid);
+	LoomClientRequest<NoResponse> deleteCluster(UUID clusterUuid);
 
 }

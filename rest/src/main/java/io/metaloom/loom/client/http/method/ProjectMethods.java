@@ -17,7 +17,7 @@ public interface ProjectMethods {
 
 	LoomClientRequest<ProjectResponse> updateProject(UUID uuid, ProjectUpdateRequest request);
 
-	LoomClientRequest<ProjectListResponse> listProject();
+	LoomClientRequest<ProjectListResponse> listProjects();
 
 	LoomClientRequest<NoResponse> deleteProject(UUID uuid);
 }

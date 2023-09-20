@@ -3,7 +3,7 @@ package io.metaloom.loom.client.http.impl;
 import java.util.function.Function;
 
 import io.metaloom.loom.rest.json.Json;
-import io.metaloom.loom.rest.model.error.ErrorResponse;
+import io.metaloom.loom.rest.model.message.GenericMessageResponse;
 
 /**
  * Exception which is also used to return non-200 error responses.
@@ -16,9 +16,12 @@ public class HttpErrorException extends Exception {
 
 	private String body;
 
-	public HttpErrorException(String message, int statusCode, String body) {
+	private String statusMsg;
+
+	public HttpErrorException(String message, int statusCode, String statusMsg, String body) {
 		super(message);
 		this.statusCode = statusCode;
+		this.statusMsg = statusMsg;
 		this.body = body;
 	}
 
@@ -45,12 +48,21 @@ public class HttpErrorException extends Exception {
 	}
 
 	/**
-	 * Return the server error response.
+	 * Return the error HTTP status message.
 	 * 
 	 * @return
 	 */
-	public ErrorResponse getError() {
-		return Json.parse(body, ErrorResponse.class);
+	public String getStatusMsg() {
+		return statusMsg;
+	}
+
+	/**
+	 * Return the server response.
+	 * 
+	 * @return
+	 */
+	public GenericMessageResponse getResponse() {
+		return Json.parse(body, GenericMessageResponse.class);
 	}
 
 	/**

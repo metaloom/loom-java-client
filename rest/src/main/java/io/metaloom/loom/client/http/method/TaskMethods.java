@@ -11,14 +11,14 @@ import io.metaloom.loom.rest.model.task.TaskUpdateRequest;
 
 public interface TaskMethods {
 
-	LoomClientRequest<TaskResponse> loadTask(UUID uuid);
+	LoomClientRequest<TaskResponse> loadTask(UUID taskUuid);
 
 	LoomClientRequest<TaskResponse> createTask(TaskCreateRequest request);
 
-	LoomClientRequest<TaskResponse> updateTask(UUID uuid, TaskUpdateRequest request);
+	LoomClientRequest<TaskResponse> updateTask(UUID taskUuid, TaskUpdateRequest request);
 
 	LoomClientRequest<TaskListResponse> listTasks();
 
-	LoomClientRequest<NoResponse> deleteTask(UUID uuid);
+	LoomClientRequest<NoResponse> deleteTask(UUID taskUuid);
 
 }
