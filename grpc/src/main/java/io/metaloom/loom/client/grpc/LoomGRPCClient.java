@@ -9,12 +9,19 @@ public interface LoomGRPCClient extends AssetMethods, ClientSettings, AutoClosea
 		return LoomGRPCClientImpl.builder();
 	}
 
-	// TODO add version info 
+	// TODO add version info
 	String USER_AGENT = "Loom gRPC Client";
 
 	/**
 	 * Close the prepared transport channel.
 	 */
 	void close();
+
+	/**
+	 * Set the token that will be used to authenticate the requests.
+	 * 
+	 * @param token
+	 */
+	void setToken(String token);
 
 }

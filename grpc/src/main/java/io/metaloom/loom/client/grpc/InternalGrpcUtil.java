@@ -1,7 +1,6 @@
 package io.metaloom.loom.client.grpc;
 
 import io.metaloom.loom.proto.AssetLoaderGrpc;
-import io.metaloom.loom.proto.VertxAssetLoaderGrpc;
 
 public final class InternalGrpcUtil {
 
@@ -9,13 +8,11 @@ public final class InternalGrpcUtil {
 	}
 
 	public static AssetLoaderGrpc.AssetLoaderBlockingStub assetsStub(ClientSettings client) {
-		return AssetLoaderGrpc.newBlockingStub(client.channel())
-				.withCallCredentials(null);
+		return AssetLoaderGrpc.newBlockingStub(client.channel()).withInterceptors(new ClientJWTInterceptor(client));
 	}
 
-	public static VertxAssetLoaderGrpc.AssetLoaderVertxStub assetsVertxStub(ClientSettings client) {
-		return VertxAssetLoaderGrpc.newVertxStub(client.channel())
-			.withCallCredentials(null);
+	public static AssetLoaderGrpc.AssetLoaderFutureStub assetsAsyncStub(ClientSettings client) {
+		return AssetLoaderGrpc.newFutureStub(client.channel());
 	}
 
 }

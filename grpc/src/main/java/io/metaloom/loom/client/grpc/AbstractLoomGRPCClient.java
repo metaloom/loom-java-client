@@ -6,6 +6,7 @@ public abstract class AbstractLoomGRPCClient implements LoomGRPCClient {
 
 	protected final String hostname;
 	protected final int port;
+	protected String token;
 
 	protected final Duration connectTimeout;
 	protected final Duration readTimeout;
@@ -50,5 +51,15 @@ public abstract class AbstractLoomGRPCClient implements LoomGRPCClient {
 	@Override
 	public Duration getWriteTimeout() {
 		return writeTimeout;
+	}
+
+	@Override
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	@Override
+	public String token() {
+		return token;
 	}
 }

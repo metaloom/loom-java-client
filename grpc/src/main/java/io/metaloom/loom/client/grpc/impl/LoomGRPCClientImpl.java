@@ -10,7 +10,6 @@ import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.metaloom.loom.client.grpc.AbstractLoomGRPCClient;
-import io.metaloom.loom.client.grpc.LoomGRPCClient;
 
 /**
  * Implementation of the {@link LoomGRPCClient}.
@@ -41,7 +40,7 @@ public class LoomGRPCClientImpl extends AbstractLoomGRPCClient {
 	public LoomGRPCClientImpl init() {
 		channel = Grpc.newChannelBuilderForAddress(hostname, port, InsecureChannelCredentials.create())
 			.userAgent(userAgent())
-			//.usePlaintext()
+			// .usePlaintext()
 			.build();
 		// ManagedChannelBuilder.forAddress(hostname, port)
 		// .userAgent(LoomGRPCClient.USER_AGENT)

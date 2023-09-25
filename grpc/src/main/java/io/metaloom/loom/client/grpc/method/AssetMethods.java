@@ -1,7 +1,7 @@
 package io.metaloom.loom.client.grpc.method;
 
 import static io.metaloom.loom.client.grpc.InternalGrpcUtil.assetsStub;
-import static io.metaloom.loom.client.grpc.InternalGrpcUtil.assetsVertxStub;
+import static io.metaloom.loom.client.grpc.InternalGrpcUtil.assetsAsyncStub;
 
 import java.util.Objects;
 
@@ -19,7 +19,7 @@ public interface AssetMethods extends ClientSettings {
 
 		return request(
 			() -> assetsStub(this).load(request.build()),
-			() -> assetsVertxStub(this).load(request.build()));
+			() -> assetsAsyncStub(this).load(request.build()));
 	}
 
 	default LoomClientRequest<AssetResponse> storeAsset(String sha512sum) {
@@ -30,7 +30,7 @@ public interface AssetMethods extends ClientSettings {
 
 		return request(
 			() -> assetsStub(this).store(request.build()),
-			() -> assetsVertxStub(this).store(request.build()));
+			() -> assetsAsyncStub(this).store(request.build()));
 	}
 
 }
