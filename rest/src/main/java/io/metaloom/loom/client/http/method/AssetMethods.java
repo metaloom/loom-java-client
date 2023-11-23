@@ -1,8 +1,9 @@
 package io.metaloom.loom.client.http.method;
 
+import static io.metaloom.loom.api.asset.AssetId.assetId;
+
 import java.util.UUID;
 
-import static io.metaloom.loom.api.asset.AssetId.assetId;
 import io.metaloom.loom.api.asset.AssetId;
 import io.metaloom.loom.client.http.LoomClientRequest;
 import io.metaloom.loom.rest.model.NoResponse;
@@ -10,7 +11,7 @@ import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
 import io.metaloom.loom.rest.model.asset.AssetListResponse;
 import io.metaloom.loom.rest.model.asset.AssetResponse;
 import io.metaloom.loom.rest.model.asset.AssetUpdateRequest;
-import io.metaloom.utils.hash.SHA512Sum;
+import io.metaloom.utils.hash.SHA512;
 
 public interface AssetMethods {
 
@@ -20,7 +21,7 @@ public interface AssetMethods {
 		return loadAsset(assetId(uuid));
 	}
 
-	default LoomClientRequest<AssetResponse> loadAsset(SHA512Sum hash) {
+	default LoomClientRequest<AssetResponse> loadAsset(SHA512 hash) {
 		return loadAsset(assetId(hash));
 	}
 
@@ -28,7 +29,7 @@ public interface AssetMethods {
 		return deleteAsset(assetId(uuid));
 	}
 
-	default LoomClientRequest<NoResponse> deleteAsset(SHA512Sum hash) {
+	default LoomClientRequest<NoResponse> deleteAsset(SHA512 hash) {
 		return deleteAsset(assetId(hash));
 	}
 
@@ -40,7 +41,7 @@ public interface AssetMethods {
 		return updateAsset(assetId(uuid), request);
 	}
 
-	default LoomClientRequest<AssetResponse> updateAsset(SHA512Sum hash, AssetUpdateRequest request) {
+	default LoomClientRequest<AssetResponse> updateAsset(SHA512 hash, AssetUpdateRequest request) {
 		return updateAsset(assetId(hash), request);
 	}
 

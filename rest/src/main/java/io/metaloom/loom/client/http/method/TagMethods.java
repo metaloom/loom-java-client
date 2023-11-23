@@ -11,7 +11,7 @@ import io.metaloom.loom.rest.model.tag.TagCreateRequest;
 import io.metaloom.loom.rest.model.tag.TagListResponse;
 import io.metaloom.loom.rest.model.tag.TagResponse;
 import io.metaloom.loom.rest.model.tag.TagUpdateRequest;
-import io.metaloom.utils.hash.SHA512Sum;
+import io.metaloom.utils.hash.SHA512;
 
 public interface TagMethods {
 
@@ -29,7 +29,7 @@ public interface TagMethods {
 
 	LoomClientRequest<TagResponse> tagAsset(AssetId assetId, TagCreateRequest request);
 
-	default LoomClientRequest<TagResponse> tagAsset(SHA512Sum assetHash, TagCreateRequest request) {
+	default LoomClientRequest<TagResponse> tagAsset(SHA512 assetHash, TagCreateRequest request) {
 		return tagAsset(assetId(assetHash), request);
 	}
 
@@ -41,7 +41,7 @@ public interface TagMethods {
 
 	LoomClientRequest<NoResponse> untagAsset(AssetId assetId, UUID tagUuid);
 
-	default LoomClientRequest<NoResponse> untagAsset(SHA512Sum assetHash, UUID tagUuid) {
+	default LoomClientRequest<NoResponse> untagAsset(SHA512 assetHash, UUID tagUuid) {
 		return untagAsset(assetId(assetHash), tagUuid);
 	}
 
