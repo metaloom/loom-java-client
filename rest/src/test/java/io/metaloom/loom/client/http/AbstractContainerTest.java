@@ -3,8 +3,9 @@ package io.metaloom.loom.client.http;
 
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import io.metaloom.loom.test.TestValues;
 import io.metaloom.loom.test.container.LoomContainer;
+import io.metaloom.loom.test.data.TestValues;
+
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 
