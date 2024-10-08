@@ -23,15 +23,10 @@ public interface AssetMethods extends ClientSettings {
 			() -> assetsAsyncStub(this).load(request.build()));
 	}
 
-	default LoomClientRequest<AssetResponse> storeAsset(SHA512 sha512sum) {
-		Objects.requireNonNull(sha512sum, "Hashsum must be specified");
-
-		AssetRequest.Builder request = AssetRequest.newBuilder()
-			.setSha512Sum(sha512sum.toString());
-
+	default LoomClientRequest<AssetResponse> storeAsset(AssetRequest request) {
 		return request(
-			() -> assetsStub(this).store(request.build()),
-			() -> assetsAsyncStub(this).store(request.build()));
+			() -> assetsStub(this).store(request),
+			() -> assetsAsyncStub(this).store(request));
 	}
 
 }

@@ -17,7 +17,6 @@ import io.metaloom.loom.api.asset.AssetId;
 import io.metaloom.loom.client.http.AbstractLoomOkHttpClient;
 import io.metaloom.loom.client.http.LoomBinaryResponse;
 import io.metaloom.loom.client.http.LoomClientRequest;
-import io.metaloom.loom.client.http.LoomHttpClient;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.annotation.AnnotationCreateRequest;
 import io.metaloom.loom.rest.model.annotation.AnnotationListResponse;

@@ -12,7 +12,7 @@ import io.grpc.ManagedChannel;
 import io.metaloom.loom.client.grpc.AbstractLoomGRPCClient;
 
 /**
- * Implementation of the {@link LoomGRPCClient}.
+ * Implementation of the {@link io.metaloom.loom.client.grpc.LoomGRPCClient}.
  */
 public class LoomGRPCClientImpl extends AbstractLoomGRPCClient {
 
