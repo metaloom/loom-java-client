@@ -1,11 +1,11 @@
-package io.metaloom.loom.client.http.method;
+package io.metaloom.loom.client.common.method;
 
 import static io.metaloom.loom.api.asset.AssetId.assetId;
 
 import java.util.UUID;
 
 import io.metaloom.loom.api.asset.AssetId;
-import io.metaloom.loom.client.http.LoomClientRequest;
+import io.metaloom.loom.client.common.LoomClientRequest;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.asset.AssetCreateRequest;
 import io.metaloom.loom.rest.model.asset.AssetListResponse;

@@ -1,6 +1,6 @@
-package io.metaloom.loom.client.http.method;
+package io.metaloom.loom.client.common.method;
 
-import io.metaloom.loom.client.http.LoomClientRequest;
+import io.metaloom.loom.client.common.LoomClientRequest;
 import io.metaloom.loom.rest.model.auth.AuthLoginResponse;
 
 public interface AuthenticationMethods {

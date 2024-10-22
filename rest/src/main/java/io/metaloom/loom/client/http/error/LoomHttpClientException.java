@@ -1,32 +1,32 @@
-package io.metaloom.loom.client.http.impl;
+package io.metaloom.loom.client.http.error;
 
 import java.util.function.Function;
 
+import io.metaloom.loom.client.common.LoomClientException;
 import io.metaloom.loom.rest.json.Json;
 import io.metaloom.loom.rest.model.message.GenericMessageResponse;
 
 /**
  * Exception which is also used to return non-200 error responses.
  */
-public class HttpErrorException extends Exception {
+public class LoomHttpClientException extends LoomClientException {
 
-	private static final long serialVersionUID = -1799524340729007029L;
+	private static final long serialVersionUID = 7139036965636956371L;
 
-	private int statusCode;
+	private final String body;
 
-	private String body;
+	private final String statusMsg;
 
-	private String statusMsg;
-
-	public HttpErrorException(String message, int statusCode, String statusMsg, String body) {
-		super(message);
-		this.statusCode = statusCode;
-		this.statusMsg = statusMsg;
-		this.body = body;
+	public LoomHttpClientException(String message, Exception e) {
+		super(500, message, e);
+		this.statusMsg = message;
+		this.body = "";
 	}
 
-	public HttpErrorException(String message, Exception e) {
-		super(message, e);
+	public LoomHttpClientException(String message, int statusCode, String statusMsg, String body) {
+		super(statusCode, message);
+		this.statusMsg = statusMsg;
+		this.body = body;
 	}
 
 	/**
@@ -38,20 +38,7 @@ public class HttpErrorException extends Exception {
 		return body;
 	}
 
-	/**
-	 * Returns the error HTTTP status code.
-	 * 
-	 * @return
-	 */
-	public int getStatusCode() {
-		return statusCode;
-	}
-
-	/**
-	 * Return the error HTTP status message.
-	 * 
-	 * @return
-	 */
+	@Override
 	public String getStatusMsg() {
 		return statusMsg;
 	}
@@ -78,7 +65,7 @@ public class HttpErrorException extends Exception {
 
 	@Override
 	public String toString() {
-		return getMessage() + " - status: " + statusCode + " body {" + body + "}";
+		return getMessage() + " - status: " + getStatusCode() + " body {" + getBody() + "}";
 	}
 
 }

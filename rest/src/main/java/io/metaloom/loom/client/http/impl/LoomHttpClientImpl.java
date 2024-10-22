@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.metaloom.loom.api.asset.AssetId;
+import io.metaloom.loom.client.common.LoomBinaryResponse;
 import io.metaloom.loom.client.http.AbstractLoomOkHttpClient;
-import io.metaloom.loom.client.http.LoomBinaryResponse;
-import io.metaloom.loom.client.http.LoomClientRequest;
+import io.metaloom.loom.client.http.LoomClientHttpRequest;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.annotation.AnnotationCreateRequest;
 import io.metaloom.loom.rest.model.annotation.AnnotationListResponse;
@@ -256,7 +256,7 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	// REST Methods
 
 	@Override
-	public LoomClientRequest<AuthLoginResponse> login(String username, String password) {
+	public LoomClientHttpRequest<AuthLoginResponse> login(String username, String password) {
 		AuthLoginRequest request = new AuthLoginRequest();
 		request.setUsername(username);
 		request.setPassword(password);
@@ -264,436 +264,436 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<UserResponse> loadUser(UUID uuid) {
+	public LoomClientHttpRequest<UserResponse> loadUser(UUID uuid) {
 		return getRequest("users/" + uuid, UserResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<UserResponse> createUser(UserCreateRequest request) {
+	public LoomClientHttpRequest<UserResponse> createUser(UserCreateRequest request) {
 		return postRequest("users", request, UserResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<UserResponse> updateUser(UUID userUuid, UserUpdateRequest request) {
+	public LoomClientHttpRequest<UserResponse> updateUser(UUID userUuid, UserUpdateRequest request) {
 		return postRequest("users/" + userUuid, request, UserResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<UserListResponse> listUsers() {
+	public LoomClientHttpRequest<UserListResponse> listUsers() {
 		return getRequest("users", UserListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteUser(UUID userUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteUser(UUID userUuid) {
 		return deleteRequest("users/" + userUuid);
 	}
 
 	// ASSET
 
 	@Override
-	public LoomClientRequest<AssetResponse> loadAsset(AssetId assetId) {
+	public LoomClientHttpRequest<AssetResponse> loadAsset(AssetId assetId) {
 		return getRequest("assets/" + assetId, AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetResponse> createAsset(AssetCreateRequest request) {
+	public LoomClientHttpRequest<AssetResponse> createAsset(AssetCreateRequest request) {
 		return postRequest("assets", request, AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetResponse> updateAsset(AssetId assetId, AssetUpdateRequest request) {
+	public LoomClientHttpRequest<AssetResponse> updateAsset(AssetId assetId, AssetUpdateRequest request) {
 		return postRequest("assets/" + assetId, request, AssetResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteAsset(AssetId assetId) {
+	public LoomClientHttpRequest<NoResponse> deleteAsset(AssetId assetId) {
 		return deleteRequest("assets/" + assetId);
 	}
 
 	@Override
-	public LoomClientRequest<AssetListResponse> listAssets() {
+	public LoomClientHttpRequest<AssetListResponse> listAssets() {
 		return getRequest("assets", AssetListResponse.class);
 	}
 
 	// ASSET + TAG
 
 	@Override
-	public LoomClientRequest<TagResponse> tagAsset(AssetId assetId, TagCreateRequest request) {
+	public LoomClientHttpRequest<TagResponse> tagAsset(AssetId assetId, TagCreateRequest request) {
 		return postRequest("assets/" + assetId + "/tags", request, TagResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> untagAsset(AssetId assetId, UUID tagUuid) {
+	public LoomClientHttpRequest<NoResponse> untagAsset(AssetId assetId, UUID tagUuid) {
 		return deleteRequest("assets/" + assetId + "/tags/" + tagUuid);
 	}
 
 	// LOCATION
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteLocation(UUID locationUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteLocation(UUID locationUuid) {
 		return deleteRequest("locations/" + locationUuid);
 	}
 
 	@Override
-	public LoomClientRequest<AssetLocationResponse> createLocation(AssetLocationCreateRequest request) {
+	public LoomClientHttpRequest<AssetLocationResponse> createLocation(AssetLocationCreateRequest request) {
 		return postRequest("locations", request, AssetLocationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetLocationResponse> updateLocation(UUID locationUuid, AssetLocationUpdateRequest request) {
+	public LoomClientHttpRequest<AssetLocationResponse> updateLocation(UUID locationUuid, AssetLocationUpdateRequest request) {
 		return postRequest("locations/" + locationUuid, request, AssetLocationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetLocationResponse> loadLocation(UUID locationUuid) {
+	public LoomClientHttpRequest<AssetLocationResponse> loadLocation(UUID locationUuid) {
 		return getRequest("locations/" + locationUuid, AssetLocationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AssetLocationListResponse> listLocations() {
+	public LoomClientHttpRequest<AssetLocationListResponse> listLocations() {
 		return getRequest("locations", AssetLocationListResponse.class);
 	}
 
 	// CLUSTER
 
 	@Override
-	public LoomClientRequest<ClusterResponse> loadCluster(UUID uuid) {
+	public LoomClientHttpRequest<ClusterResponse> loadCluster(UUID uuid) {
 		return getRequest("/clusters/" + uuid, ClusterResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteCluster(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteCluster(UUID uuid) {
 		return deleteRequest("/clusters/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<ClusterResponse> updateCluster(UUID clusterUuid, ClusterUpdateRequest request) {
+	public LoomClientHttpRequest<ClusterResponse> updateCluster(UUID clusterUuid, ClusterUpdateRequest request) {
 		return postRequest("clusters/" + clusterUuid, request, ClusterResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<ClusterResponse> createCluster(ClusterCreateRequest request) {
+	public LoomClientHttpRequest<ClusterResponse> createCluster(ClusterCreateRequest request) {
 		return postRequest("clusters", request, ClusterResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<ClusterListResponse> listClusters() {
+	public LoomClientHttpRequest<ClusterListResponse> listClusters() {
 		return getRequest("clusters", ClusterListResponse.class);
 	}
 
 	// PROJECT
 
 	@Override
-	public LoomClientRequest<ProjectResponse> loadProject(UUID projectUuid) {
+	public LoomClientHttpRequest<ProjectResponse> loadProject(UUID projectUuid) {
 		return getRequest("projects/" + projectUuid, ProjectResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteProject(UUID projectUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteProject(UUID projectUuid) {
 		return deleteRequest("projects/" + projectUuid);
 	}
 
 	@Override
-	public LoomClientRequest<ProjectResponse> createProject(ProjectCreateRequest request) {
+	public LoomClientHttpRequest<ProjectResponse> createProject(ProjectCreateRequest request) {
 		return postRequest("projects", request, ProjectResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<ProjectResponse> updateProject(UUID projectUuid, ProjectUpdateRequest request) {
+	public LoomClientHttpRequest<ProjectResponse> updateProject(UUID projectUuid, ProjectUpdateRequest request) {
 		return postRequest("projects/" + projectUuid, request, ProjectResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<ProjectListResponse> listProjects() {
+	public LoomClientHttpRequest<ProjectListResponse> listProjects() {
 		return getRequest("projects", ProjectListResponse.class);
 	}
 
 	// LIBRARY
 
 	@Override
-	public LoomClientRequest<LibraryResponse> loadLibrary(UUID libraryUuid) {
+	public LoomClientHttpRequest<LibraryResponse> loadLibrary(UUID libraryUuid) {
 		return getRequest("libraries/" + libraryUuid, LibraryResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteLibrary(UUID libraryUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteLibrary(UUID libraryUuid) {
 		return deleteRequest("libraries/" + libraryUuid);
 	}
 
 	@Override
-	public LoomClientRequest<LibraryListResponse> listLibraries() {
+	public LoomClientHttpRequest<LibraryListResponse> listLibraries() {
 		return getRequest("libraries", LibraryListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<LibraryResponse> updateLibrary(UUID libraryUuid, LibraryUpdateRequest request) {
+	public LoomClientHttpRequest<LibraryResponse> updateLibrary(UUID libraryUuid, LibraryUpdateRequest request) {
 		return postRequest("libraries/" + libraryUuid, request, LibraryResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<LibraryResponse> createLibrary(LibraryCreateRequest request) {
+	public LoomClientHttpRequest<LibraryResponse> createLibrary(LibraryCreateRequest request) {
 		return postRequest("libraries", request, LibraryResponse.class);
 	}
 
 	// ANNOTATION
 
 	@Override
-	public LoomClientRequest<AnnotationResponse> loadAnnotation(UUID annotationUuid) {
+	public LoomClientHttpRequest<AnnotationResponse> loadAnnotation(UUID annotationUuid) {
 		return getRequest("annotations/" + annotationUuid, AnnotationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteAnnotation(UUID annotationUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteAnnotation(UUID annotationUuid) {
 		return deleteRequest("annotations/" + annotationUuid);
 	}
 
 	@Override
-	public LoomClientRequest<AnnotationResponse> updateAnnotation(UUID annotationUuid, AnnotationUpdateRequest request) {
+	public LoomClientHttpRequest<AnnotationResponse> updateAnnotation(UUID annotationUuid, AnnotationUpdateRequest request) {
 		return postRequest("annotations/" + annotationUuid, request, AnnotationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AnnotationResponse> createAnnotation(AnnotationCreateRequest request) {
+	public LoomClientHttpRequest<AnnotationResponse> createAnnotation(AnnotationCreateRequest request) {
 		return postRequest("annotations", request, AnnotationResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<AnnotationListResponse> listAnnotations() {
+	public LoomClientHttpRequest<AnnotationListResponse> listAnnotations() {
 		return getRequest("annotations", AnnotationListResponse.class);
 	}
 
 	// COLLECTION
 
 	@Override
-	public LoomClientRequest<CollectionResponse> loadCollection(UUID collectionUuid) {
+	public LoomClientHttpRequest<CollectionResponse> loadCollection(UUID collectionUuid) {
 		return getRequest("collections/" + collectionUuid, CollectionResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<CollectionResponse> createCollection(CollectionCreateRequest request) {
+	public LoomClientHttpRequest<CollectionResponse> createCollection(CollectionCreateRequest request) {
 		return postRequest("collections", request, CollectionResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<CollectionResponse> updateCollection(UUID collectionUuid, CollectionUpdateRequest request) {
+	public LoomClientHttpRequest<CollectionResponse> updateCollection(UUID collectionUuid, CollectionUpdateRequest request) {
 		return postRequest("collections/" + collectionUuid, request, CollectionResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<CollectionListResponse> listCollections() {
+	public LoomClientHttpRequest<CollectionListResponse> listCollections() {
 		return getRequest("collections", CollectionListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteCollection(UUID collectionUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteCollection(UUID collectionUuid) {
 		return deleteRequest("collections/" + collectionUuid);
 	}
 
 	// TASK REACTION
 
-	public LoomClientRequest<ReactionResponse> loadTaskReaction(UUID taskUuid, UUID reactionUuid) {
+	public LoomClientHttpRequest<ReactionResponse> loadTaskReaction(UUID taskUuid, UUID reactionUuid) {
 		return getRequest("tasks/" + taskUuid + "/reactions/" + reactionUuid, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionResponse> createTaskReaction(UUID taskUuid, ReactionCreateRequest request) {
+	public LoomClientHttpRequest<ReactionResponse> createTaskReaction(UUID taskUuid, ReactionCreateRequest request) {
 		return postRequest("tasks/" + taskUuid + "/reactions", request, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionResponse> updateTaskReaction(UUID taskUuid, UUID reactionUuid, ReactionUpdateRequest request) {
+	public LoomClientHttpRequest<ReactionResponse> updateTaskReaction(UUID taskUuid, UUID reactionUuid, ReactionUpdateRequest request) {
 		return postRequest("tasks/" + taskUuid + "/reactions/" + reactionUuid, request, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionListResponse> listTaskReaction(UUID taskUuid) {
+	public LoomClientHttpRequest<ReactionListResponse> listTaskReaction(UUID taskUuid) {
 		return getRequest("tasks/" + taskUuid + "/reactions", ReactionListResponse.class);
 	}
 
-	public LoomClientRequest<NoResponse> deleteTaskReaction(UUID taskUuid, UUID reactionUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteTaskReaction(UUID taskUuid, UUID reactionUuid) {
 		return deleteRequest("tasks/" + taskUuid + "/reactions/" + reactionUuid);
 	}
 
 	// ASSET REACTION
 
-	public LoomClientRequest<ReactionResponse> loadAssetReaction(AssetId assetId, UUID reactionUuid) {
+	public LoomClientHttpRequest<ReactionResponse> loadAssetReaction(AssetId assetId, UUID reactionUuid) {
 		return getRequest("assets/" + assetId + "/reactions/" + reactionUuid, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionResponse> createAssetReaction(AssetId assetId, ReactionCreateRequest request) {
+	public LoomClientHttpRequest<ReactionResponse> createAssetReaction(AssetId assetId, ReactionCreateRequest request) {
 		return postRequest("assets/" + assetId + "/reactions", request, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionResponse> updateAssetReaction(AssetId assetId, UUID reactionUuid, ReactionUpdateRequest request) {
+	public LoomClientHttpRequest<ReactionResponse> updateAssetReaction(AssetId assetId, UUID reactionUuid, ReactionUpdateRequest request) {
 		return postRequest("assets/" + assetId + "/reactions/" + reactionUuid, request, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionListResponse> listAssetReaction(AssetId assetId) {
+	public LoomClientHttpRequest<ReactionListResponse> listAssetReaction(AssetId assetId) {
 		return getRequest("assets/" + assetId + "/reactions", ReactionListResponse.class);
 	}
 
-	public LoomClientRequest<NoResponse> deleteAssetReaction(AssetId assetId, UUID reactionUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteAssetReaction(AssetId assetId, UUID reactionUuid) {
 		return deleteRequest("assets/" + assetId + "/reactions/" + reactionUuid);
 	}
 
 	// COMMENT REACTION
 
-	public LoomClientRequest<ReactionResponse> loadCommentReaction(UUID commentUuid, UUID reactionUuid) {
+	public LoomClientHttpRequest<ReactionResponse> loadCommentReaction(UUID commentUuid, UUID reactionUuid) {
 		return getRequest("comments/" + commentUuid + "/reactions/" + reactionUuid, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionResponse> createCommentReaction(UUID commentUuid, ReactionCreateRequest request) {
+	public LoomClientHttpRequest<ReactionResponse> createCommentReaction(UUID commentUuid, ReactionCreateRequest request) {
 		return postRequest("comments/" + commentUuid + "/reactions", request, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionResponse> updateCommentReaction(UUID commentUuid, UUID reactionUuid, ReactionUpdateRequest request) {
+	public LoomClientHttpRequest<ReactionResponse> updateCommentReaction(UUID commentUuid, UUID reactionUuid, ReactionUpdateRequest request) {
 		return postRequest("comments/" + commentUuid + "/reactions/" + reactionUuid, request, ReactionResponse.class);
 	}
 
-	public LoomClientRequest<ReactionListResponse> listCommentReaction(UUID commentUuid) {
+	public LoomClientHttpRequest<ReactionListResponse> listCommentReaction(UUID commentUuid) {
 		return getRequest("comments/" + commentUuid + "/reactions", ReactionListResponse.class);
 	}
 
-	public LoomClientRequest<NoResponse> deleteCommentReaction(UUID commentUuid, UUID reactionUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteCommentReaction(UUID commentUuid, UUID reactionUuid) {
 		return deleteRequest("comments/" + commentUuid + "/reactions/" + reactionUuid);
 	}
 
 	// EMBEDDING
 
 	@Override
-	public LoomClientRequest<EmbeddingResponse> loadEmbedding(UUID embeddingUuid) {
+	public LoomClientHttpRequest<EmbeddingResponse> loadEmbedding(UUID embeddingUuid) {
 		return getRequest("embeddings/" + embeddingUuid, EmbeddingResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteEmbedding(UUID embeddingUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteEmbedding(UUID embeddingUuid) {
 		return deleteRequest("embeddings/" + embeddingUuid);
 	}
 
 	@Override
-	public LoomClientRequest<EmbeddingListResponse> listEmbeddings() {
+	public LoomClientHttpRequest<EmbeddingListResponse> listEmbeddings() {
 		return getRequest("embeddings", EmbeddingListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<EmbeddingResponse> updateEmbedding(UUID embeddingUuid, EmbeddingUpdateRequest request) {
+	public LoomClientHttpRequest<EmbeddingResponse> updateEmbedding(UUID embeddingUuid, EmbeddingUpdateRequest request) {
 		return postRequest("embeddings/" + embeddingUuid, request, EmbeddingResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<EmbeddingResponse> createEmbedding(EmbeddingCreateRequest request) {
+	public LoomClientHttpRequest<EmbeddingResponse> createEmbedding(EmbeddingCreateRequest request) {
 		return postRequest("embeddings", request, EmbeddingResponse.class);
 	}
 
 	// GROUP
 
 	@Override
-	public LoomClientRequest<GroupResponse> loadGroup(UUID groupUuid) {
+	public LoomClientHttpRequest<GroupResponse> loadGroup(UUID groupUuid) {
 		return getRequest("groups/" + groupUuid, GroupResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<GroupListResponse> listGroups() {
+	public LoomClientHttpRequest<GroupListResponse> listGroups() {
 		return getRequest("groups", GroupListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteGroup(UUID groupUuid) {
+	public LoomClientHttpRequest<NoResponse> deleteGroup(UUID groupUuid) {
 		return deleteRequest("groups/" + groupUuid);
 	}
 
 	@Override
-	public LoomClientRequest<GroupResponse> updateGroup(UUID uuid, GroupUpdateRequest request) {
+	public LoomClientHttpRequest<GroupResponse> updateGroup(UUID uuid, GroupUpdateRequest request) {
 		return postRequest("groups/" + uuid, request, GroupResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<GroupResponse> createGroup(GroupCreateRequest request) {
+	public LoomClientHttpRequest<GroupResponse> createGroup(GroupCreateRequest request) {
 		return postRequest("groups", request, GroupResponse.class);
 	}
 
 	// COMMENT
 
 	@Override
-	public LoomClientRequest<CommentListResponse> listCommentsForAnnotation(UUID annotationUuid) {
+	public LoomClientHttpRequest<CommentListResponse> listCommentsForAnnotation(UUID annotationUuid) {
 		return getRequest("annotation/" + annotationUuid + "/comments", CommentListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<CommentResponse> loadComment(UUID uuid) {
+	public LoomClientHttpRequest<CommentResponse> loadComment(UUID uuid) {
 		return getRequest("comments/" + uuid, CommentResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteComment(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteComment(UUID uuid) {
 		return deleteRequest("comments/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<CommentResponse> updateComment(UUID uuid, CommentUpdateRequest request) {
+	public LoomClientHttpRequest<CommentResponse> updateComment(UUID uuid, CommentUpdateRequest request) {
 		return postRequest("comments/" + uuid, request, CommentResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<CommentResponse> createComment(CommentCreateRequest request) {
+	public LoomClientHttpRequest<CommentResponse> createComment(CommentCreateRequest request) {
 		return postRequest("comments", request, CommentResponse.class);
 	}
 
 	// ROLE
 
 	@Override
-	public LoomClientRequest<RoleResponse> loadRole(UUID uuid) {
+	public LoomClientHttpRequest<RoleResponse> loadRole(UUID uuid) {
 		return getRequest("roles/" + uuid, RoleResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteRole(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteRole(UUID uuid) {
 		return deleteRequest("roles/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<RoleResponse> updateRole(UUID uuid, RoleUpdateRequest request) {
+	public LoomClientHttpRequest<RoleResponse> updateRole(UUID uuid, RoleUpdateRequest request) {
 		return postRequest("roles/" + uuid, request, RoleResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<RoleResponse> createRole(RoleCreateRequest request) {
+	public LoomClientHttpRequest<RoleResponse> createRole(RoleCreateRequest request) {
 		return postRequest("roles", request, RoleResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<RoleListResponse> listRoles() {
+	public LoomClientHttpRequest<RoleListResponse> listRoles() {
 		return getRequest("roles", RoleListResponse.class);
 	}
 
 	// TASK
 
 	@Override
-	public LoomClientRequest<TaskResponse> loadTask(UUID uuid) {
+	public LoomClientHttpRequest<TaskResponse> loadTask(UUID uuid) {
 		return getRequest("tasks/" + uuid, TaskResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteTask(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteTask(UUID uuid) {
 		return deleteRequest("tasks/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<TaskListResponse> listTasks() {
+	public LoomClientHttpRequest<TaskListResponse> listTasks() {
 		return getRequest("tasks", TaskListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TaskResponse> updateTask(UUID uuid, TaskUpdateRequest request) {
+	public LoomClientHttpRequest<TaskResponse> updateTask(UUID uuid, TaskUpdateRequest request) {
 		return postRequest("tasks/" + uuid, request, TaskResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TaskResponse> createTask(TaskCreateRequest request) {
+	public LoomClientHttpRequest<TaskResponse> createTask(TaskCreateRequest request) {
 		return postRequest("tasks", request, TaskResponse.class);
 	}
 
 	// ATTACHMENT
 
 	@Override
-	public LoomClientRequest<AttachmentResponse> uploadAttachment(String filename, String mimeType, InputStream fileData) {
+	public LoomClientHttpRequest<AttachmentResponse> uploadAttachment(String filename, String mimeType, InputStream fileData) {
 		Objects.requireNonNull(filename, "filename must not be null");
 		Objects.requireNonNull(fileData, "fileData must not be null");
 		Objects.requireNonNull(mimeType, "mimeType must not be null");
@@ -737,81 +737,81 @@ public class LoomHttpClientImpl extends AbstractLoomOkHttpClient {
 	}
 
 	@Override
-	public LoomClientRequest<AttachmentListResponse> listAttachments() {
+	public LoomClientHttpRequest<AttachmentListResponse> listAttachments() {
 		return getRequest("/attachments", AttachmentListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteAttachment(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteAttachment(UUID uuid) {
 		return deleteRequest("/attachments/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<AttachmentResponse> loadAttachment(UUID uuid) {
+	public LoomClientHttpRequest<AttachmentResponse> loadAttachment(UUID uuid) {
 		return getRequest("/attachments/" + uuid, AttachmentResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<LoomBinaryResponse> downloadAttachment(UUID uuid) {
+	public LoomClientHttpRequest<LoomBinaryResponse> downloadAttachment(UUID uuid) {
 		return getDownloadRequest("/attachments/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<AttachmentResponse> updateAttachment(UUID uuid, AttachmentUpdateRequest request) {
+	public LoomClientHttpRequest<AttachmentResponse> updateAttachment(UUID uuid, AttachmentUpdateRequest request) {
 		return postRequest("/attachments/" + uuid, request, AttachmentResponse.class);
 	}
 
 	// TAG
 
 	@Override
-	public LoomClientRequest<TagResponse> loadTag(UUID uuid) {
+	public LoomClientHttpRequest<TagResponse> loadTag(UUID uuid) {
 		return getRequest("/tags/" + uuid, TagResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteTag(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteTag(UUID uuid) {
 		return deleteRequest("/tags/" + uuid);
 	}
 
 	@Override
-	public LoomClientRequest<TagListResponse> listTags() {
+	public LoomClientHttpRequest<TagListResponse> listTags() {
 		return getRequest("/tags", TagListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TagResponse> updateTag(UUID uuid, TagUpdateRequest request) {
+	public LoomClientHttpRequest<TagResponse> updateTag(UUID uuid, TagUpdateRequest request) {
 		return postRequest("/tags/" + uuid, request, TagResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TagResponse> createTag(TagCreateRequest request) {
+	public LoomClientHttpRequest<TagResponse> createTag(TagCreateRequest request) {
 		return postRequest("/tags", request, TagResponse.class);
 	}
 
 	// TOKEN
 
 	@Override
-	public LoomClientRequest<TokenResponse> loadToken(UUID uuid) {
+	public LoomClientHttpRequest<TokenResponse> loadToken(UUID uuid) {
 		return getRequest("/tokens/" + uuid, TokenResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TokenListResponse> listTokens() {
+	public LoomClientHttpRequest<TokenListResponse> listTokens() {
 		return getRequest("/tokens", TokenListResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TokenResponse> updateToken(UUID uuid, TokenUpdateRequest request) {
+	public LoomClientHttpRequest<TokenResponse> updateToken(UUID uuid, TokenUpdateRequest request) {
 		return postRequest("/tokens/" + uuid, request, TokenResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<TokenResponse> createToken(TokenCreateRequest request) {
+	public LoomClientHttpRequest<TokenResponse> createToken(TokenCreateRequest request) {
 		return postRequest("/tokens", request, TokenResponse.class);
 	}
 
 	@Override
-	public LoomClientRequest<NoResponse> deleteToken(UUID uuid) {
+	public LoomClientHttpRequest<NoResponse> deleteToken(UUID uuid) {
 		return deleteRequest("/tokens/" + uuid);
 	}
 

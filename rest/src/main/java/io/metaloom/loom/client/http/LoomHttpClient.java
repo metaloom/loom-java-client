@@ -2,9 +2,11 @@ package io.metaloom.loom.client.http;
 
 import java.time.Duration;
 
+import io.metaloom.loom.client.common.LoomClient;
+import io.metaloom.loom.client.common.method.ClientMethods;
 import io.metaloom.loom.client.http.impl.LoomHttpClientImpl;
 
-public interface LoomHttpClient extends ClientMethods, ClientSettings, AutoCloseable {
+public interface LoomHttpClient extends ClientSettings, LoomClient {
 
 	static LoomHttpClientImpl.Builder builder() {
 		return LoomHttpClientImpl.builder();
@@ -41,11 +43,6 @@ public interface LoomHttpClient extends ClientMethods, ClientSettings, AutoClose
 	String getPathPrefix();
 
 	/**
-	 * Close the client and release all resources.
-	 */
-	void close();
-
-	/**
 	 * Return the configured connect timeout.
 	 *
 	 * @return
@@ -65,13 +62,6 @@ public interface LoomHttpClient extends ClientMethods, ClientSettings, AutoClose
 	 * @return
 	 */
 	Duration getWriteTimeout();
-
-	/**
-	 * Set the token to be used for authentication.
-	 *
-	 * @param token
-	 */
-	void setToken(String token);
 
 	/**
 	 * Return the used authentication token.

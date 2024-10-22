@@ -8,9 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import io.metaloom.loom.client.http.impl.HttpErrorException;
+import io.metaloom.loom.client.common.LoomBinaryResponse;
+import io.metaloom.loom.client.common.LoomClientException;
+import io.metaloom.loom.client.common.LoomClientRequest;
+import io.metaloom.loom.client.http.error.LoomHttpClientException;
 import io.metaloom.loom.client.http.impl.LoomClientRequestImpl;
-import io.metaloom.loom.client.http.parameter.QueryParameters;
 import io.metaloom.loom.rest.json.Json;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestRequestModel;
@@ -22,9 +24,9 @@ import okhttp3.RequestBody;
 import okio.BufferedSink;
 import okio.Okio;
 
-public interface LoomClientRequest<T extends RestResponseModel<T>> extends QueryParameters<T> {
+public interface LoomClientHttpRequest<T extends RestResponseModel<T>> extends LoomClientRequest<T> {
 
-	public static final Logger log = LoggerFactory.getLogger(LoomClientRequest.class);
+	public static final Logger log = LoggerFactory.getLogger(LoomClientHttpRequest.class);
 
 	public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -44,7 +46,7 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> extends Query
 	 * @param okClient
 	 * @return
 	 */
-	public static LoomClientRequest<NoResponse> createNoResponseRequest(String method, String path, LoomHttpClient loomClient,
+	public static LoomClientHttpRequest<NoResponse> createNoResponseRequest(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, NoResponse.class, null);
 	}
@@ -60,18 +62,18 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> extends Query
 	 * @param responseClass
 	 * @return
 	 */
-	public static <T extends RestResponseModel<T>> LoomClientRequest<T> createNoBodyRequest(String method, String path, LoomHttpClient loomClient,
+	public static <T extends RestResponseModel<T>> LoomClientHttpRequest<T> createNoBodyRequest(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient, Class<T> responseClass) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, responseClass, null);
 	}
 
-	public static LoomClientRequest<LoomBinaryResponse> createDownloadRequest(String method, String path, LoomHttpClient loomClient,
+	public static LoomClientHttpRequest<LoomBinaryResponse> createDownloadRequest(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient,
 		Class<LoomBinaryResponse> responseClass) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, responseClass, null);
 	}
 
-	public static <T extends RestResponseModel<T>> LoomClientRequest<T> createBinaryRequest(String method, String path, LoomHttpClient loomClient,
+	public static <T extends RestResponseModel<T>> LoomClientHttpRequest<T> createBinaryRequest(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient, Class<T> responseClass, InputStream data, String contentType) {
 		return new LoomClientRequestImpl<>(method, path, loomClient, okClient, responseClass, new RequestBody() {
 			@Override
@@ -102,7 +104,7 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> extends Query
 	 * @param responseClass
 	 * @return
 	 */
-	public static <T extends RestResponseModel<T>> LoomClientRequest<T> createJsonRequest(String method, String path, LoomHttpClient loomClient,
+	public static <T extends RestResponseModel<T>> LoomClientHttpRequest<T> createJsonRequest(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient, RestRequestModel request, Class<T> responseClass) {
 		String bodyStr = Json.parse(request);
 		if (log.isDebugEnabled()) {
@@ -123,9 +125,9 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> extends Query
 	 * Executes the request in a synchronized blocking way and returns the returned JSON data.
 	 * 
 	 * @return
-	 * @throws HttpErrorException
+	 * @throws LoomHttpClientException
 	 */
-	JsonNode json() throws HttpErrorException;
+	JsonNode json() throws LoomHttpClientException;
 
 	/**
 	 * Executes the request in a synchronized blocking way.
@@ -133,6 +135,6 @@ public interface LoomClientRequest<T extends RestResponseModel<T>> extends Query
 	 * @return
 	 * @throws HttpErrorException
 	 */
-	T sync() throws HttpErrorException;
+	T sync() throws LoomClientException;
 
 }

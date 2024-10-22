@@ -1,4 +1,4 @@
-package io.metaloom.loom.client.http;
+package io.metaloom.loom.client.common;
 
 import java.io.InputStream;
 import java.util.Arrays;

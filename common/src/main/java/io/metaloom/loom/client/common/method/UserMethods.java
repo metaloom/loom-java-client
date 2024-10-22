@@ -1,8 +1,8 @@
-package io.metaloom.loom.client.http.method;
+package io.metaloom.loom.client.common.method;
 
 import java.util.UUID;
 
-import io.metaloom.loom.client.http.LoomClientRequest;
+import io.metaloom.loom.client.common.LoomClientRequest;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.user.UserCreateRequest;
 import io.metaloom.loom.rest.model.user.UserListResponse;

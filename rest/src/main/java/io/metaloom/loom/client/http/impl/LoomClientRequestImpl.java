@@ -8,9 +8,10 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import io.metaloom.loom.client.http.LoomBinaryResponse;
-import io.metaloom.loom.client.http.LoomClientRequest;
+import io.metaloom.loom.client.common.LoomBinaryResponse;
+import io.metaloom.loom.client.http.LoomClientHttpRequest;
 import io.metaloom.loom.client.http.LoomHttpClient;
+import io.metaloom.loom.client.http.error.LoomHttpClientException;
 import io.metaloom.loom.rest.json.Json;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestModel;
@@ -26,7 +27,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements LoomClientRequest<T> {
+public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements LoomClientHttpRequest<T> {
 
 	public static final Logger log = LoggerFactory.getLogger(LoomClientRequestImpl.class);
 
@@ -73,7 +74,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	}
 
 	@Override
-	public JsonNode json() throws HttpErrorException {
+	public JsonNode json() throws LoomHttpClientException {
 		return executeSyncJson(build());
 	}
 
@@ -83,13 +84,13 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	}
 
 	@Override
-	public LoomClientRequest<T> addQueryParameter(String key, String value) {
+	public LoomClientHttpRequest<T> addQueryParameter(String key, String value) {
 		urlBuilder.addQueryParameter(key, value);
 		return this;
 	}
 
 	@Override
-	public T sync() throws HttpErrorException {
+	public T sync() throws LoomHttpClientException {
 		return executeSync(build());
 	}
 
@@ -100,7 +101,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	 * @return Response body text
 	 * @throws HttpErrorException
 	 */
-	private String executeSyncPlain(Request request) throws HttpErrorException {
+	private String executeSyncPlain(Request request) throws LoomHttpClientException {
 		try (Response response = okClient.newCall(request).execute()) {
 			ResponseBody body = response.body();
 			String bodyStr = "";
@@ -108,7 +109,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 				try {
 					bodyStr = body.string();
 				} catch (Exception e) {
-					throw new HttpErrorException("Error while reading body", e);
+					throw new LoomHttpClientException("Error while reading body", e);
 				}
 			}
 			if (!response.isSuccessful()) {
@@ -116,12 +117,12 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 					log.debug("Failed request with code {" + response.code() + "} and body:\n" + bodyStr);
 				}
 
-				throw new HttpErrorException("Request failed {" + response.message() + "}", response.code(), response.message(), bodyStr);
+				throw new LoomHttpClientException("Request failed {" + response.message() + "}", response.code(), response.message(), bodyStr);
 			}
 
 			return bodyStr;
 		} catch (IOException e1) {
-			throw new HttpErrorException("Error while excuting request", e1);
+			throw new LoomHttpClientException("Error while excuting request", e1);
 		}
 	}
 
@@ -131,7 +132,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	 * @param request
 	 * @throws HttpErrorException
 	 */
-	private void executeSyncNoResponse(Request request) throws HttpErrorException {
+	private void executeSyncNoResponse(Request request) throws LoomHttpClientException {
 		try (Response response = okClient.newCall(request).execute()) {
 			if (response.isSuccessful()) {
 				return;
@@ -146,28 +147,28 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 					try {
 						bodyStr = body.string();
 					} catch (Exception e) {
-						throw new HttpErrorException("Error while reading body", e);
+						throw new LoomHttpClientException("Error while reading body", e);
 					}
 				}
 
-				throw new HttpErrorException("Request failed {" + response.message() + "}", response.code(), response.message(), bodyStr);
+				throw new LoomHttpClientException("Request failed {" + response.message() + "}", response.code(), response.message(), bodyStr);
 			}
 		} catch (IOException e1) {
-			throw new HttpErrorException("Error while excuting request", e1);
+			throw new LoomHttpClientException("Error while excuting request", e1);
 		}
 	}
 
-	private LoomBinaryResponse executeSyncBinary(Request request) throws HttpErrorException {
+	private LoomBinaryResponse executeSyncBinary(Request request) throws LoomHttpClientException {
 		try {
 			Response response = okClient.newCall(request).execute();
 			return new LoomBinaryResponseImpl(response);
 		} catch (IOException e1) {
-			throw new HttpErrorException("Error while excuting request", e1);
+			throw new LoomHttpClientException("Error while excuting request", e1);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public T executeSync(Request request) throws HttpErrorException {
+	public T executeSync(Request request) throws LoomHttpClientException {
 		if (NoResponse.class.isAssignableFrom(responseClass)) {
 			executeSyncNoResponse(request);
 			return null;
@@ -192,12 +193,12 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	 * @return Parsed response object
 	 * @throws HttpErrorException
 	 */
-	private JsonNode executeSyncJson(Request request) throws HttpErrorException {
+	private JsonNode executeSyncJson(Request request) throws LoomHttpClientException {
 		try {
 			String bodyStr = executeSyncPlain(request);
 			return Json.toJson(bodyStr);
 		} catch (JsonProcessingException e) {
-			throw new HttpErrorException("Error while excuting request", e);
+			throw new LoomHttpClientException("Error while excuting request", e);
 		}
 	}
 
@@ -234,12 +235,12 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 							try {
 								bodyStr = body.string();
 							} catch (Exception e) {
-								sub.onError(new HttpErrorException("Error while reading body", e));
+								sub.onError(new LoomHttpClientException("Error while reading body", e));
 								return;
 							}
 						}
 						if (!response.isSuccessful()) {
-							sub.onError(new HttpErrorException("Request failed", response.code(), response.message(), bodyStr));
+							sub.onError(new LoomHttpClientException("Request failed", response.code(), response.message(), bodyStr));
 							return;
 						}
 						if (RestModel.class.isAssignableFrom(responseClass)) {
@@ -258,7 +259,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	}
 
 	@Override
-	public LoomClientRequest<T> self() {
+	public LoomClientHttpRequest<T> self() {
 		return this;
 	}
 

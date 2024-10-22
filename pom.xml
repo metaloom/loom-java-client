@@ -21,7 +21,9 @@
     <modules>
         <module>common</module>
         <module>rest</module>
+        <!--
         <module>grpc</module>
+        -->
         <module>report</module>
     </modules>
 
@@ -82,6 +84,12 @@
     </licenses>
 
     <dependencies>
+        <!-- Models-->
+        <dependency>
+            <groupId>io.metaloom.loom.shared</groupId>
+            <artifactId>loom-rest-model</artifactId>
+        </dependency>
+
         <!--Test-->
         <dependency>
             <groupId>org.testcontainers</groupId>

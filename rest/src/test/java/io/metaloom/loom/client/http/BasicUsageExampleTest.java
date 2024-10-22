@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import io.metaloom.loom.client.common.LoomClient;
 import io.metaloom.loom.rest.model.user.UserResponse;
 
 public class BasicUsageExampleTest extends AbstractContainerTest {
@@ -14,7 +15,7 @@ public class BasicUsageExampleTest extends AbstractContainerTest {
 		int port = loom.httpPort();
 		String host = loom.getHost();
 
-		try (LoomHttpClient client = LoomHttpClient.builder()
+		try (LoomClient client = LoomHttpClient.builder()
 			.setHostname(host)
 			.setPort(port)
 			.build()) {

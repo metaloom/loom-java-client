@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import io.metaloom.loom.client.http.LoomBinaryResponse;
+import io.metaloom.loom.client.common.LoomBinaryResponse;
 import okhttp3.Response;
 
 public class LoomBinaryResponseImpl implements LoomBinaryResponse {
