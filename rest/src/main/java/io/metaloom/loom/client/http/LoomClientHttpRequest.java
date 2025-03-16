@@ -13,7 +13,7 @@ import io.metaloom.loom.client.common.LoomClientException;
 import io.metaloom.loom.client.common.LoomClientRequest;
 import io.metaloom.loom.client.http.error.LoomHttpClientException;
 import io.metaloom.loom.client.http.impl.LoomClientRequestImpl;
-import io.metaloom.loom.rest.json.Json;
+import io.metaloom.loom.rest.json.LoomJson;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestRequestModel;
 import io.metaloom.loom.rest.model.RestResponseModel;
@@ -106,7 +106,7 @@ public interface LoomClientHttpRequest<T extends RestResponseModel<T>> extends L
 	 */
 	public static <T extends RestResponseModel<T>> LoomClientHttpRequest<T> createJsonRequest(String method, String path, LoomHttpClient loomClient,
 		OkHttpClient okClient, RestRequestModel request, Class<T> responseClass) {
-		String bodyStr = Json.parse(request);
+		String bodyStr = LoomJson.encode(request);
 		if (log.isDebugEnabled()) {
 			log.debug("Sending request: " + method + " " + path + "\n" + bodyStr);
 		}

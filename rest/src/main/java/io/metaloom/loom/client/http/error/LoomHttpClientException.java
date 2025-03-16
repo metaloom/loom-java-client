@@ -3,7 +3,7 @@ package io.metaloom.loom.client.http.error;
 import java.util.function.Function;
 
 import io.metaloom.loom.client.common.LoomClientException;
-import io.metaloom.loom.rest.json.Json;
+import io.metaloom.loom.rest.json.LoomJson;
 import io.metaloom.loom.rest.model.message.GenericMessageResponse;
 
 /**
@@ -49,7 +49,7 @@ public class LoomHttpClientException extends LoomClientException {
 	 * @return
 	 */
 	public GenericMessageResponse getResponse() {
-		return Json.parse(body, GenericMessageResponse.class);
+		return LoomJson.parse(body, GenericMessageResponse.class);
 	}
 
 	/**

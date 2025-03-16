@@ -12,7 +12,7 @@ import io.metaloom.loom.client.common.LoomBinaryResponse;
 import io.metaloom.loom.client.http.LoomClientHttpRequest;
 import io.metaloom.loom.client.http.LoomHttpClient;
 import io.metaloom.loom.client.http.error.LoomHttpClientException;
-import io.metaloom.loom.rest.json.Json;
+import io.metaloom.loom.rest.json.LoomJson;
 import io.metaloom.loom.rest.model.NoResponse;
 import io.metaloom.loom.rest.model.RestModel;
 import io.metaloom.loom.rest.model.RestResponseModel;
@@ -178,7 +178,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 			if (log.isDebugEnabled()) {
 				log.debug("Response JSON:\n" + bodyStr);
 			}
-			return (T) Json.parse(bodyStr, r);
+			return (T) LoomJson.parse(bodyStr, r);
 		} else if (LoomBinaryResponse.class.equals(responseClass)) {
 			return (T) executeSyncBinary(request);
 		} else {
@@ -196,7 +196,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 	private JsonNode executeSyncJson(Request request) throws LoomHttpClientException {
 		try {
 			String bodyStr = executeSyncPlain(request);
-			return Json.toJson(bodyStr);
+			return LoomJson.toJson(bodyStr);
 		} catch (JsonProcessingException e) {
 			throw new LoomHttpClientException("Error while excuting request", e);
 		}
@@ -245,7 +245,7 @@ public class LoomClientRequestImpl<T extends RestResponseModel<T>> implements Lo
 						}
 						if (RestModel.class.isAssignableFrom(responseClass)) {
 							Class<? extends RestModel> r = (Class<? extends RestModel>) responseClass;
-							sub.onSuccess((T) Json.parse(bodyStr, r));
+							sub.onSuccess((T) LoomJson.parse(bodyStr, r));
 						} else {
 							throw new RuntimeException("Unsupported response class encountered. Got: " + responseClass.getName());
 						}
